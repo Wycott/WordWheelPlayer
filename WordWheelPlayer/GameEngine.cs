@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using static System.Console;
 
 namespace WordWheelPlayer;
 
@@ -51,8 +52,8 @@ public class GameEngine
 
         while (word != "-")
         {
-            word = Console.ReadLine();
-            Console.WriteLine();
+            word = ReadLine();
+            WriteLine();
 
             if (word != null)
             {
@@ -94,17 +95,17 @@ public class GameEngine
 
             wordsFoundSoFar.Sort();
 
-            Console.Clear();
+            Clear();
 
             foreach (var foundWord in wordsFoundSoFar)
             {
-                Console.WriteLine(foundWord);
+                WriteLine(foundWord);
                 wordCount++;
             }
 
-            Console.WriteLine();
-            Console.WriteLine($"Total:{wordCount}");
-            Console.WriteLine();
+            WriteLine();
+            WriteLine($"Total:{wordCount}");
+            WriteLine();
         }
     }
 
@@ -128,20 +129,20 @@ public class GameEngine
                 Used = false
             };
 
-            Console.Write(letter);
+            Write(letter);
 
             if (gameLetters.Count == 0)
             {
                 gameLetter.MustInclude = true;
                 keyLetter = letter;
 
-                Console.Write("*");
+                Write("*");
             }
 
             gameLetters.Add(gameLetter);
         }
 
-        Console.WriteLine();
+        WriteLine();
     }
 
     private void InitDictionary()
