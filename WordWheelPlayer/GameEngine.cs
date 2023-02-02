@@ -134,6 +134,7 @@ public class GameEngine
             {
                 gameLetter.MustInclude = true;
                 keyLetter = letter;
+
                 Console.Write("*");
             }
 
