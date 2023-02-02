@@ -1,11 +1,10 @@
-﻿namespace WordWheelPlayer
+﻿namespace WordWheelPlayer;
+
+internal class Program
 {
-    internal class Program
+    private static void Main()
     {
-        static void Main(string[] args)
-        {
-            GameEngine engine = new GameEngine();
-            engine.Start();
-        }
+        var engine = new GameEngine();
+        engine.Start();
     }
 }

@@ -1,177 +1,170 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Transactions;
+﻿using System.Text.RegularExpressions;
 
-namespace WordWheelPlayer
+namespace WordWheelPlayer;
+
+public class GameEngine
 {
-    public class GameEngine
+    private const int MinLength = 3;
+
+    private readonly List<string> wordsFoundSoFar = new();
+
+    private readonly List<GameLetter> gameLetters = new();
+
+    private string keyLetter = string.Empty;
+
+    private readonly List<string> englishDictionary = new();
+
+    //private List<string> LettersToUse = new List<string>()
+    //{
+    //    "I", // By convention, all words must include this letter
+    //    "E",
+    //    "D",
+    //    "F",
+    //    "T",
+    //    "C",
+    //    "E",
+    //    "G",
+    //    "N"
+    //};
+
+    private readonly List<string> lettersToUse = new()
     {
-        private const int minLength = 3;
+        "A", // By convention, all words must include this letter
+        "C",
+        "E",
+        "L",
+        "R",
+        "W",
+        "T",
+        "A",
+        "U"
+    };
 
-        private List<string> WordsFound = new List<string>();
+    public GameEngine()
+    {
+        Init();
+    }
 
-        private List<GameLetter> GameLetters = new List<GameLetter>();
+    public void Start()
+    {
+        var word = string.Empty;
 
-        private string keyLetter = String.Empty;
-
-        private List<string> EnglishDictionary = new List<string>();
-
-        //private List<string> LettersToUse = new List<string>()
-        //{
-        //    "I", // By convention, all words must include this letter
-        //    "E",
-        //    "D",
-        //    "F",
-        //    "T",
-        //    "C",
-        //    "E",
-        //    "G",
-        //    "N"
-        //};
-
-        private List<string> LettersToUse = new List<string>()
+        while (word != "-")
         {
-            "A", // By convention, all words must include this letter
-            "C",
-            "E",
-            "L",
-            "R",
-            "W",
-            "T",
-            "A",
-            "U"
-        };
+            word = Console.ReadLine();
+            Console.WriteLine();
 
-        public GameEngine()
-        {
-            Init();
-        }
-
-        public void Start()
-        {
-            string word = String.Empty;
-
-            while (word != "-")
+            if (word != null)
             {
-                word = Console.ReadLine();
-                Console.WriteLine();
+                word = word.ToUpper();
 
-                if (word != null)
+                if (wordsFoundSoFar.Contains(word) || !word.Contains(keyLetter))
                 {
-                    word = word.ToUpper();
+                    continue;
+                }
 
-                    if (WordsFound.Contains(word) || !word.Contains(keyLetter))
+                var letterCount = 0;
+
+                foreach (var guessLetter in word)
+                {
+
+                    var gl = gameLetters.FirstOrDefault(x => x.Letter == guessLetter.ToString() && x.Used == false);
+
+                    if (gl == null)
                     {
                         continue;
                     }
 
-                    int letterCount = 0;
+                    gl.Used = true;
+                    letterCount++;
+                }
 
-                    foreach (var guessLetter in word)
+                if (letterCount == word.Length)
+                {
+                    if (WordIsInDictionary(word) && word.Length >= MinLength)
                     {
-
-                        var gl = GameLetters.FirstOrDefault(x => x.Letter == guessLetter.ToString() && x.Used == false);
-
-                        if (gl != null)
-                        {
-                            gl.Used = true;
-                            letterCount++;
-                        }
+                        wordsFoundSoFar.Add(word);
                     }
-
-                    if (letterCount == word.Length)
-                    {
-                        if (WordIsInDictionary(word) && word.Length >= minLength)
-                        {
-                            WordsFound.Add(word);
-                        }
-                    }
-                    ResetLetters();
                 }
 
-                int wordsFound = 0;
-
-                WordsFound.Sort();
-                Console.Clear();
-                foreach (var foundWord in WordsFound)
-                {
-                    Console.WriteLine(foundWord);
-                    wordsFound++;
-                }
-
-                Console.WriteLine();
-                Console.WriteLine($"Total:{wordsFound}");
-                Console.WriteLine();
+                ResetLetters();
             }
 
-        }
+            var wordCount = 0;
 
-        private void ResetLetters()
-        {
-            foreach (var letter in GameLetters)
+            wordsFoundSoFar.Sort();
+
+            Console.Clear();
+
+            foreach (var foundWord in wordsFoundSoFar)
             {
-                letter.Used = false;
+                Console.WriteLine(foundWord);
+                wordCount++;
             }
-        }
 
-        private void Init()
-        {
-            InitDictionary();
-
-            foreach (var letter in LettersToUse)
-            {
-                var gameLetter = new GameLetter()
-                {
-                    Letter = letter,
-                    Used = false
-                };
-
-                Console.Write(letter.ToString());
-
-                if (GameLetters.Count == 0)
-                {
-                    gameLetter.MustInclude = true;
-                    keyLetter = letter;
-                    Console.Write("*");
-                }
-
-                GameLetters.Add(gameLetter);
-            }
+            Console.WriteLine();
+            Console.WriteLine($"Total:{wordCount}");
             Console.WriteLine();
         }
+    }
 
-
-        private void InitDictionary()
+    private void ResetLetters()
+    {
+        foreach (var letter in gameLetters)
         {
-            using (var sr = new StreamReader("words.txt"))
+            letter.Used = false;
+        }
+    }
+
+    private void Init()
+    {
+        InitDictionary();
+
+        foreach (var letter in lettersToUse)
+        {
+            var gameLetter = new GameLetter()
             {
-                string line;
+                Letter = letter,
+                Used = false
+            };
 
-                while ((line = sr.ReadLine()) != null)
-                {
-                    var candidate = line.ToUpper();
+            Console.Write(letter);
 
-                    string regex = "^[a-zA-Z]+$";
+            if (gameLetters.Count == 0)
+            {
+                gameLetter.MustInclude = true;
+                keyLetter = letter;
+                Console.Write("*");
+            }
 
+            gameLetters.Add(gameLetter);
+        }
 
-                    if (candidate.Length <= LettersToUse.Count &&
-                        candidate.Length >= minLength &&
-                        Regex.IsMatch(candidate, regex)
-                       )
-                    {
-                        EnglishDictionary.Add(candidate);
-                    }
-                }
+        Console.WriteLine();
+    }
+
+    private void InitDictionary()
+    {
+        using var sr = new StreamReader("words.txt");
+
+        while (sr.ReadLine() is { } line)
+        {
+            var candidate = line.ToUpper();
+
+            const string RegExPattern = "^[a-zA-Z]+$";
+
+            if (candidate.Length <= lettersToUse.Count &&
+                candidate.Length >= MinLength &&
+                Regex.IsMatch(candidate, RegExPattern)
+               )
+            {
+                englishDictionary.Add(candidate);
             }
         }
+    }
 
-        private bool WordIsInDictionary(string wordToCheck)
-        {
-            return EnglishDictionary.Contains(wordToCheck);
-        }
+    private bool WordIsInDictionary(string wordToCheck)
+    {
+        return englishDictionary.Contains(wordToCheck);
     }
 }
