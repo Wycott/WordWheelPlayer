@@ -3,7 +3,7 @@ using static System.Console;
 
 namespace WordWheelPlayer;
 
-public class GameEngine
+public partial class GameEngine
 {
     private const int MinLength = 3;
 
@@ -14,6 +14,8 @@ public class GameEngine
     private string keyLetter = string.Empty;
 
     private readonly List<string> englishDictionary = new();
+
+    private string GameLetters { get; set; }
 
     //private List<string> LettersToUse = new List<string>()
     //{
@@ -28,36 +30,73 @@ public class GameEngine
     //    "N"
     //};
 
+    //private readonly List<string> lettersToUse = new()
+    //{
+    //    "A", // By convention, all words must include this letter
+    //    "C",
+    //    "E",
+    //    "L",
+    //    "R",
+    //    "W",
+    //    "T",
+    //    "A",
+    //    "U"
+    //};
+
     private readonly List<string> lettersToUse = new()
     {
-        "A", // By convention, all words must include this letter
-        "C",
-        "E",
-        "L",
-        "R",
-        "W",
-        "T",
+        "I", // By convention, all words must include this letter
+        "M",
         "A",
-        "U"
+        "G",
+        "N",
+        "C",
+        "O",
+        "R",
+        "N"
     };
 
     public GameEngine()
     {
+        DisplayInstructions();
         Init();
     }
 
     public void Start()
     {
-        var word = string.Empty;
+        var quitGame = false;
 
-        while (word != "-")
+        while (!quitGame)
         {
-            word = ReadLine();
+            var word = ReadLine();
             WriteLine();
 
             if (word != null)
             {
                 word = word.ToUpper();
+
+                if (word.Substring(0, 1) == ":" && word.Length > 1)
+                {
+                    switch (word.Substring(1))
+                    {
+                        case "WORDS":
+                            DisplayWordsFound();
+                            break;
+                        case "LETTERS":
+                            DisplayLetters();
+                            break;
+                        case "HELP":
+                            DisplayInstructions();
+                            break;
+                        case "SHUFFLE":
+                            // TODO
+                            break;
+                        case "QUIT":
+                        case "EXIT":
+                            quitGame = true;
+                            continue;
+                    }
+                }
 
                 if (wordsFoundSoFar.Contains(word) || !word.Contains(keyLetter))
                 {
@@ -68,7 +107,6 @@ public class GameEngine
 
                 foreach (var guessLetter in word)
                 {
-
                     var gl = gameLetters.FirstOrDefault(x => x.Letter == guessLetter.ToString() && x.Used == false);
 
                     if (gl == null)
@@ -82,6 +120,12 @@ public class GameEngine
 
                 if (letterCount == word.Length)
                 {
+                    if (word.Length < MinLength)
+                    {
+                        DisplayMessage($"Words must be at least {MinLength} letters long!");
+                        continue;
+                    }
+
                     if (WordIsInDictionary(word) && word.Length >= MinLength)
                     {
                         wordsFoundSoFar.Add(word);
@@ -91,21 +135,15 @@ public class GameEngine
                 ResetLetters();
             }
 
-            var wordCount = 0;
-
             wordsFoundSoFar.Sort();
 
             Clear();
 
-            foreach (var foundWord in wordsFoundSoFar)
-            {
-                WriteLine(foundWord);
-                wordCount++;
-            }
+            DisplayLetters();
 
-            WriteLine();
-            WriteLine($"Total:{wordCount}");
-            WriteLine();
+            var wordCount = DisplayWordsFound();
+
+            DisplayWordTotal(wordCount);
         }
     }
 
@@ -121,6 +159,8 @@ public class GameEngine
     {
         InitDictionary();
 
+        GameLetters = string.Empty;
+
         foreach (var letter in lettersToUse)
         {
             var gameLetter = new GameLetter()
@@ -129,20 +169,20 @@ public class GameEngine
                 Used = false
             };
 
-            Write(letter);
+            GameLetters += letter;
 
             if (gameLetters.Count == 0)
             {
                 gameLetter.MustInclude = true;
                 keyLetter = letter;
 
-                Write("*");
+                GameLetters += "*";
             }
 
             gameLetters.Add(gameLetter);
         }
 
-        WriteLine();
+        DisplayLetters();
     }
 
     private void InitDictionary()
