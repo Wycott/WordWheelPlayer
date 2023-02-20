@@ -37,51 +37,54 @@ namespace WordWheelPlayer
             WriteLine();
         }
 
+        private static void DisplayMessageLines(List<string> textLines)
+        {
+            var currentForeground = ForegroundColor;
+
+            ForegroundColor = ConsoleColor.Yellow;
+
+            foreach (var line in textLines)
+            {
+                WriteLine(line);
+            }
+
+            ForegroundColor = currentForeground;
+        }
+
         private static void DisplayMessage(string text)
         {
-            var currentForeground = Console.ForegroundColor;
+            var lines = new List<string>() { text };
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
-
-            WriteLine(text);
-
-            Console.ForegroundColor = currentForeground;
+            DisplayMessageLines(lines);
         }
 
         private static void DisplayInstructions()
         {
-            var currentForeground = Console.ForegroundColor;
+            var lines = new List<string>()
+            {
+                "",
+                CenterText(".oO WORD WHEEL Oo."),
+                "",
+                $"Find as many words of {MinLength} letters or more using the central letter (marked with *)",
+                "",
+                "The game supports the following commands:",
+                "\t:LETTERS - to display letters",
+                "\t:WORDS   - to display words found so far",
+                "\t:HELP    - display this text",
+                "\t:EXIT    - to quit",
+                ""
+            };
 
-            Console.ForegroundColor = ConsoleColor.Yellow;
-
-            DisplayInstructionText();
-
-            Console.ForegroundColor = currentForeground;
-        }
-
-        private static void DisplayInstructionText()
-        {
-            WriteLine();
-            WriteLine(CenterText(".oO WORD WHEEL Oo."));
-            WriteLine();
-            WriteLine($"Find as many words of {MinLength} letters or more using the central letter (marked with *)");
-            WriteLine();
-            WriteLine("The game supports the following commands:");
-            WriteLine("\t:LETTERS - to display letters");
-            WriteLine("\t:WORDS   - to display words found so far");
-            WriteLine("\t:HELP    - display this text");
-            WriteLine("\t:EXIT    - to quit");
-            WriteLine();
+            DisplayMessageLines(lines);
         }
 
         private static string CenterText(string text)
         {
-            var width = 80;
+            const int Width = 80;
 
-            var padSize = (width - text.Length) / 2;
+            var padSize = (Width - text.Length) / 2;
 
-            return new string(' ',  padSize) + text;
-
+            return new string(' ', padSize) + text;
         }
     }
 }
