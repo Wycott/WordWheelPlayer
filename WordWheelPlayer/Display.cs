@@ -70,6 +70,7 @@ namespace WordWheelPlayer
                 "The game supports the following commands:",
                 "\t:LETTERS - to display letters",
                 "\t:WORDS   - to display words found so far",
+                "\t:SHUFFLE - shuffle the letters",
                 "\t:HELP    - display this text",
                 "\t:EXIT    - to quit",
                 ""

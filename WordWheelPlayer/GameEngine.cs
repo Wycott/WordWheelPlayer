@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using WordWheelPlayer.Helpers;
 using static System.Console;
 
 namespace WordWheelPlayer;
@@ -15,7 +16,7 @@ public partial class GameEngine
 
     private readonly List<string> englishDictionary = new();
 
-    private string GameLetters { get; set; }
+    private string? GameLetters { get; set; }
 
     //private List<string> LettersToUse = new List<string>()
     //{
@@ -89,7 +90,8 @@ public partial class GameEngine
                             DisplayInstructions();
                             break;
                         case "SHUFFLE":
-                            // TODO
+                            GameLetters = LetterHelper.ShuffleLetters(GameLetters);
+                            DisplayLetters();
                             break;
                         case "QUIT":
                         case "EXIT":
