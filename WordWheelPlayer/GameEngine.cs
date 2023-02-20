@@ -187,13 +187,13 @@ public partial class GameEngine
 
     private void InitDictionary()
     {
+        const string RegExPattern = "^[a-zA-Z]+$";
+
         using var sr = new StreamReader("words.txt");
 
         while (sr.ReadLine() is { } line)
         {
             var candidate = line.ToUpper();
-
-            const string RegExPattern = "^[a-zA-Z]+$";
 
             if (candidate.Length <= lettersToUse.Count &&
                 candidate.Length >= MinLength &&
