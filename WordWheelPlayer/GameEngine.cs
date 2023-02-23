@@ -46,9 +46,9 @@ public partial class GameEngine
             {
                 word = word.ToUpper();
 
-                if (word.Substring(0, 1) == ":" && word.Length > 1)
+                if (word[..1] == ":" && word.Length > 1)
                 {
-                    switch (word.Substring(1))
+                    switch (word[1..])
                     {
                         case "WORDS":
                             DisplayWordsFound();

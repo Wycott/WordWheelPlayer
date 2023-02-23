@@ -1,8 +1,8 @@
 ﻿namespace WordWheelPlayer.Helpers;
 
-internal static class LetterHelper
+public static class LetterHelper
 {
-    internal static string ShuffleLetters(string letters)
+    public static string ShuffleLetters(string letters)
     {
         var retVal = string.Empty;
         var shuffleLetters = new List<GameLetter>();
@@ -11,7 +11,7 @@ internal static class LetterHelper
         {
             if (letter == '*')
             {
-                shuffleLetters[shuffleLetters.Count - 1].MustInclude = true;
+                shuffleLetters[^1].MustInclude = true;
             }
             else
             {
