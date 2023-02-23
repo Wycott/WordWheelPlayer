@@ -74,6 +74,7 @@ public partial class GameEngine
             CenterText(".oO WORD WHEEL Oo."),
             "",
             $"Find as many words of {MinLength} letters or more using the central letter (marked with *)",
+            $"There will be at least one word that uses all {MaxLength} letters",
             "",
             "The game supports the following commands:",
             "\t:LETTERS - to display letters",

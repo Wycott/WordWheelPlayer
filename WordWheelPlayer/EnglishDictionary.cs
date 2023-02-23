@@ -49,7 +49,7 @@ public class EnglishDictionary
 
         if (LongestWord != null)
         {
-            GameLetters = FindMostCommonLetter(LongestWord);
+            GameLetters = ArrangeLettersForGame(LongestWord);
         }
     }
 
@@ -58,13 +58,16 @@ public class EnglishDictionary
         return englishDictionary.Contains(wordToCheck);
     }
 
-    private static List<string> FindMostCommonLetter(string word)
+    private static List<string> ArrangeLettersForGame(string word)
     {
         var retVal = new List<string>();
 
         var maxVal = 100;
         var currentLetter = string.Empty;
-            
+
+        // Pick the most common letter using scrabble weighting as the central letter
+        // In practice, the last instance of such a letter will be used
+        // Suspect (but have not proved) that this will always have a score of 1
         foreach (var letter in word)
         {
             var valueFound = -1;
@@ -122,10 +125,12 @@ public class EnglishDictionary
             currentLetter = letter.ToString();
         }
 
+        // Add the central letter
         retVal.Add(currentLetter);
 
         var found = false;
 
+        // And then add the rest omitting the already added letter
         foreach (var letter in word)
         {
             var stringLetter = letter.ToString();
