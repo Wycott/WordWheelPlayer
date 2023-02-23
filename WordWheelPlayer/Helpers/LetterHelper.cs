@@ -1,35 +1,34 @@
-﻿namespace WordWheelPlayer.Helpers
+﻿namespace WordWheelPlayer.Helpers;
+
+internal static class LetterHelper
 {
-    internal static class LetterHelper
+    internal static string ShuffleLetters(string letters)
     {
-        internal static string ShuffleLetters(string letters)
+        var retVal = string.Empty;
+        var shuffleLetters = new List<GameLetter>();
+
+        foreach (var letter in letters)
         {
-            var retVal = string.Empty;
-            var shuffleLetters = new List<GameLetter>();
-
-            foreach (var letter in letters)
+            if (letter == '*')
             {
-                if (letter == '*')
-                {
-                    shuffleLetters[shuffleLetters.Count - 1].MustInclude = true;
-                }
-                else
-                {
-                    shuffleLetters.Add(new GameLetter() { Letter = letter.ToString() });
-                }
+                shuffleLetters[shuffleLetters.Count - 1].MustInclude = true;
             }
-
-            foreach (var shuffleLetter in shuffleLetters.OrderBy(_ => Guid.NewGuid().ToString()))
+            else
             {
-                retVal += shuffleLetter.Letter;
-
-                if (shuffleLetter.MustInclude)
-                {
-                    retVal += '*';
-                }
+                shuffleLetters.Add(new GameLetter { Letter = letter.ToString() });
             }
-
-            return retVal;
         }
+
+        foreach (var shuffleLetter in shuffleLetters.OrderBy(_ => Guid.NewGuid().ToString()))
+        {
+            retVal += shuffleLetter.Letter;
+
+            if (shuffleLetter.MustInclude)
+            {
+                retVal += '*';
+            }
+        }
+
+        return retVal;
     }
 }

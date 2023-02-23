@@ -20,48 +20,7 @@ public partial class GameEngine
     private EnglishDictionary AvailableWords
     {
         get;
-        set;
-
     }
-
-    //private List<string> LettersToUse = new List<string>()
-    //{
-    //    "I", // By convention, all words must include this letter
-    //    "E",
-    //    "D",
-    //    "F",
-    //    "T",
-    //    "C",
-    //    "E",
-    //    "G",
-    //    "N"
-    //};
-
-    //private readonly List<string> lettersToUse = new()
-    //{
-    //    "A", // By convention, all words must include this letter
-    //    "C",
-    //    "E",
-    //    "L",
-    //    "R",
-    //    "W",
-    //    "T",
-    //    "A",
-    //    "U"
-    //};
-
-    //private readonly List<string> lettersToUse = new()
-    //{
-    //    "I", // By convention, all words must include this letter
-    //    "M",
-    //    "A",
-    //    "G",
-    //    "N",
-    //    "C",
-    //    "O",
-    //    "R",
-    //    "N"
-    //};
 
     private readonly List<string> lettersToUse;
 
@@ -180,7 +139,7 @@ public partial class GameEngine
 
         foreach (var letter in lettersToUse)
         {
-            var gameLetter = new GameLetter()
+            var gameLetter = new GameLetter
             {
                 Letter = letter,
                 Used = false

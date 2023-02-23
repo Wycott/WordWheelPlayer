@@ -1,158 +1,151 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace WordWheelPlayer
+namespace WordWheelPlayer;
+
+public class EnglishDictionary
 {
-    public class EnglishDictionary
+    private readonly List<string> englishDictionary = new();
+    private readonly List<LongestWordCandidate> candidateWords = new();
+
+    private int MinWordLength { get; }
+    private int MaxWordLength { get; }
+
+    public string? LongestWord { get; set; }
+
+    public List<string> GameLetters = new();
+
+    public EnglishDictionary(int minWordLength, int maxWordLength)
     {
-        private readonly List<string> englishDictionary = new();
-        private readonly List<LongestWordCandidate> candidateWords = new();
+        MinWordLength = minWordLength;
+        MaxWordLength = maxWordLength;
+    }
 
-        private int MinWordLength { get; set; }
-        private int MaxWordLength { get; set; }
+    public void InitDictionary()
+    {
+        const string RegExPattern = "^[a-zA-Z]+$";
 
-        public string? LongestWord { get; set; }
+        using var sr = new StreamReader("words.txt");
 
-        public List<string> GameLetters = new();
-
-        public EnglishDictionary(int minWordLength, int maxWordLength)
+        while (sr.ReadLine() is { } line)
         {
-            MinWordLength = minWordLength;
-            MaxWordLength = maxWordLength;
-        }
+            var candidate = line.ToUpper();
 
-        public void InitDictionary()
-        {
-            const string RegExPattern = "^[a-zA-Z]+$";
-
-            using var sr = new StreamReader("words.txt");
-
-            while (sr.ReadLine() is { } line)
+            if (candidate.Length <= MaxWordLength &&
+                candidate.Length >= MinWordLength &&
+                Regex.IsMatch(candidate, RegExPattern)
+               )
             {
-                var candidate = line.ToUpper();
+                englishDictionary.Add(candidate);
 
-                if (candidate.Length <= MaxWordLength &&
-                    candidate.Length >= MinWordLength &&
-                    Regex.IsMatch(candidate, RegExPattern)
-                   )
+                if (candidate.Length == MaxWordLength)
                 {
-                    englishDictionary.Add(candidate);
-
-                    if (candidate.Length == MaxWordLength)
-                    {
-                        candidateWords.Add(new LongestWordCandidate() { LongestWord = candidate, SortBy = Guid.NewGuid().ToString() });
-                    }
+                    candidateWords.Add(new LongestWordCandidate { LongestWord = candidate, SortBy = Guid.NewGuid().ToString() });
                 }
             }
-
-            var firstCandidateWord = candidateWords.MinBy(x => x.SortBy);
-            LongestWord = firstCandidateWord?.LongestWord;
-
-            if (LongestWord != null)
-            {
-                GameLetters = FindMostCommonLetter(LongestWord);
-            }
         }
 
-        public bool WordIsInDictionary(string wordToCheck)
+        var firstCandidateWord = candidateWords.MinBy(x => x.SortBy);
+        LongestWord = firstCandidateWord?.LongestWord;
+
+        if (LongestWord != null)
         {
-            return englishDictionary.Contains(wordToCheck);
+            GameLetters = FindMostCommonLetter(LongestWord);
         }
+    }
 
-        private List<string> FindMostCommonLetter(string word)
-        {
-            var retVal = new List<string>();
+    public bool WordIsInDictionary(string wordToCheck)
+    {
+        return englishDictionary.Contains(wordToCheck);
+    }
 
-            int maxVal = 100;
-            string currentLetter = string.Empty;
+    private static List<string> FindMostCommonLetter(string word)
+    {
+        var retVal = new List<string>();
+
+        var maxVal = 100;
+        var currentLetter = string.Empty;
             
-            foreach (var letter in word)
+        foreach (var letter in word)
+        {
+            var valueFound = -1;
+
+            switch (letter)
             {
-                int valueFound = -1;
-
-                switch (letter)
-                {
-                    case 'A':
-                    case 'E':
-                    case 'I':
-                    case 'O':
-                    case 'U':
-                    case 'L':
-                    case 'N':
-                    case 'S':
-                    case 'T':
-                    case 'R':
-                        valueFound = 1;
-                        //currentLetter = letter.ToString();
-                        break;
-                    case 'D':
-                    case 'G':
-                        valueFound = 2;
-                        //currentLetter = letter.ToString();
-                        break;
-                    case 'B':
-                    case 'C':
-                    case 'M':
-                    case 'P':
-                        valueFound = 3;
-                        //currentLetter = letter.ToString();
-                        break;
-                    case 'F':
-                    case 'H':
-                    case 'V':
-                    case 'W':
-                    case 'Y':
-                        valueFound = 4;
-                        //currentLetter = letter.ToString();
-                        break;
-
-                    case 'K':
-                        valueFound = 5;
-                        //currentLetter = letter.ToString();
-                        break;
-                    case 'J':
-                    case 'X':
-                        valueFound = 8;
-                        //currentLetter = letter.ToString();
-                        break;
-                    case 'Q':
-                    case 'Z':
-                        valueFound = 10;
-                        //currentLetter = letter.ToString();
-                        break;
-                }
-
-                if (valueFound < maxVal)
-                {
-                    maxVal = valueFound;
-                    currentLetter = letter.ToString();
-                }
+                case 'A':
+                case 'E':
+                case 'I':
+                case 'O':
+                case 'U':
+                case 'L':
+                case 'N':
+                case 'S':
+                case 'T':
+                case 'R':
+                    valueFound = 1;
+                    break;
+                case 'D':
+                case 'G':
+                    valueFound = 2;
+                    break;
+                case 'B':
+                case 'C':
+                case 'M':
+                case 'P':
+                    valueFound = 3;
+                    break;
+                case 'F':
+                case 'H':
+                case 'V':
+                case 'W':
+                case 'Y':
+                    valueFound = 4;
+                    break;
+                case 'K':
+                    valueFound = 5;
+                    break;
+                case 'J':
+                case 'X':
+                    valueFound = 8;
+                    break;
+                case 'Q':
+                case 'Z':
+                    valueFound = 10;
+                    break;
             }
 
-            retVal.Add(currentLetter);
-
-            bool found = false;
-
-            foreach (var letter in word)
+            if (valueFound >= maxVal)
             {
-                var stringLetter = letter.ToString();
-
-                if (stringLetter != currentLetter)
-                {
-                    retVal.Add(stringLetter);
-                    continue;
-                }
-
-                if (!found)
-                {
-                    found = true;
-                }
-                else
-                {
-                    retVal.Add(stringLetter);
-                }
+                continue;
             }
 
-            return retVal;
+            maxVal = valueFound;
+            currentLetter = letter.ToString();
         }
+
+        retVal.Add(currentLetter);
+
+        var found = false;
+
+        foreach (var letter in word)
+        {
+            var stringLetter = letter.ToString();
+
+            if (stringLetter != currentLetter)
+            {
+                retVal.Add(stringLetter);
+                continue;
+            }
+
+            if (!found)
+            {
+                found = true;
+            }
+            else
+            {
+                retVal.Add(stringLetter);
+            }
+        }
+
+        return retVal;
     }
 }
