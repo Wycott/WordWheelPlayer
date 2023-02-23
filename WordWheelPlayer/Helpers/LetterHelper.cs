@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WordWheelPlayer.Helpers
+﻿namespace WordWheelPlayer.Helpers
 {
     internal static class LetterHelper
     {
@@ -25,9 +19,10 @@ namespace WordWheelPlayer.Helpers
                 }
             }
 
-            foreach (var shuffleLetter in shuffleLetters.OrderBy(x => Guid.NewGuid().ToString()))
+            foreach (var shuffleLetter in shuffleLetters.OrderBy(_ => Guid.NewGuid().ToString()))
             {
                 retVal += shuffleLetter.Letter;
+
                 if (shuffleLetter.MustInclude)
                 {
                     retVal += '*';

@@ -4,6 +4,14 @@ namespace WordWheelPlayer
 {
     public partial class GameEngine
     {
+        private void PeekWord()
+        {
+            if (AvailableWords.LongestWord != null)
+            {
+                DisplayMessage(AvailableWords.LongestWord);
+            }
+        }
+
         private int DisplayWordsFound()
         {
             var wordCount = 0;

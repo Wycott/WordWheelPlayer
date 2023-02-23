@@ -1,5 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using WordWheelPlayer.Helpers;
+﻿using WordWheelPlayer.Helpers;
 using static System.Console;
 
 namespace WordWheelPlayer;
@@ -8,15 +7,22 @@ public partial class GameEngine
 {
     private const int MinLength = 3;
 
+    private const int MaxLength = 9;
+
     private readonly List<string> wordsFoundSoFar = new();
 
     private readonly List<GameLetter> gameLetters = new();
 
     private string keyLetter = string.Empty;
 
-    private readonly List<string> englishDictionary = new();
-
     private string? GameLetters { get; set; }
+
+    private EnglishDictionary AvailableWords
+    {
+        get;
+        set;
+
+    }
 
     //private List<string> LettersToUse = new List<string>()
     //{
@@ -44,21 +50,26 @@ public partial class GameEngine
     //    "U"
     //};
 
-    private readonly List<string> lettersToUse = new()
-    {
-        "I", // By convention, all words must include this letter
-        "M",
-        "A",
-        "G",
-        "N",
-        "C",
-        "O",
-        "R",
-        "N"
-    };
+    //private readonly List<string> lettersToUse = new()
+    //{
+    //    "I", // By convention, all words must include this letter
+    //    "M",
+    //    "A",
+    //    "G",
+    //    "N",
+    //    "C",
+    //    "O",
+    //    "R",
+    //    "N"
+    //};
+
+    private readonly List<string> lettersToUse;
 
     public GameEngine()
     {
+        AvailableWords = new EnglishDictionary(MinLength, MaxLength);
+        AvailableWords.InitDictionary();
+        lettersToUse = AvailableWords.GameLetters;
         DisplayInstructions();
         Init();
     }
@@ -90,8 +101,14 @@ public partial class GameEngine
                             DisplayInstructions();
                             break;
                         case "SHUFFLE":
-                            GameLetters = LetterHelper.ShuffleLetters(GameLetters);
+                            if (GameLetters != null)
+                            {
+                                GameLetters = LetterHelper.ShuffleLetters(GameLetters);
+                            }
                             DisplayLetters();
+                            break;
+                        case "PEEK": // Easter egg
+                            PeekWord();
                             break;
                         case "QUIT":
                         case "EXIT":
@@ -128,7 +145,7 @@ public partial class GameEngine
                         continue;
                     }
 
-                    if (WordIsInDictionary(word) && word.Length >= MinLength)
+                    if (AvailableWords.WordIsInDictionary(word) && word.Length >= MinLength)
                     {
                         wordsFoundSoFar.Add(word);
                     }
@@ -159,8 +176,6 @@ public partial class GameEngine
 
     private void Init()
     {
-        InitDictionary();
-
         GameLetters = string.Empty;
 
         foreach (var letter in lettersToUse)
@@ -184,31 +199,8 @@ public partial class GameEngine
             gameLetters.Add(gameLetter);
         }
 
+        GameLetters = LetterHelper.ShuffleLetters(GameLetters);
+
         DisplayLetters();
-    }
-
-    private void InitDictionary()
-    {
-        const string RegExPattern = "^[a-zA-Z]+$";
-
-        using var sr = new StreamReader("words.txt");
-
-        while (sr.ReadLine() is { } line)
-        {
-            var candidate = line.ToUpper();
-
-            if (candidate.Length <= lettersToUse.Count &&
-                candidate.Length >= MinLength &&
-                Regex.IsMatch(candidate, RegExPattern)
-               )
-            {
-                englishDictionary.Add(candidate);
-            }
-        }
-    }
-
-    private bool WordIsInDictionary(string wordToCheck)
-    {
-        return englishDictionary.Contains(wordToCheck);
     }
 }
