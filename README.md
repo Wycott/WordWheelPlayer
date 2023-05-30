@@ -6,4 +6,6 @@
 
 A console application for playing word wheel type games found in many daily newspapers
 
+---
+
 *Last updated: 29 May 2023*
