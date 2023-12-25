@@ -1,24 +1,23 @@
-namespace WordWheelPlayer.Test
+namespace WordWheelPlayer.Test;
+
+public class LongestWordCandidateTest
 {
-    public class LongestWordCandidateTest
+    [Fact]
+    public void WhenSetup_ThenShouldBeAsExpected()
     {
-        [Fact]
-        public void WhenSetup_ThenShouldBeAsExpected()
+        // Arrange
+        const string ExpectedLongestWord = "antidisestablishmentarianism";
+        var expectedSortBy = Guid.Empty.ToString();
+
+        // Act
+        var lwc = new LongestWordCandidate
         {
-            // Arrange
-            const string ExpectedLongestWord = "antidisestablishmentarianism";
-            string expectedSortBy = Guid.Empty.ToString();
+            SortBy = expectedSortBy,
+            LongestWord = ExpectedLongestWord
+        };
 
-            // Act
-            var lwc = new LongestWordCandidate
-            {
-                SortBy = expectedSortBy,
-                LongestWord = ExpectedLongestWord
-            };
-
-            // Assert
-            Assert.Equal(ExpectedLongestWord, lwc.LongestWord);
-            Assert.Equal(expectedSortBy, lwc.SortBy);
-        }
+        // Assert
+        Assert.Equal(ExpectedLongestWord, lwc.LongestWord);
+        Assert.Equal(expectedSortBy, lwc.SortBy);
     }
 }
