@@ -46,7 +46,7 @@ public partial class GameEngine
             {
                 word = word.ToUpper();
 
-                if (word[..1] == ":" && word.Length > 1)
+                if (word.Length > 1 && word[..1] == ":")
                 {
                     switch (word[1..])
                     {
