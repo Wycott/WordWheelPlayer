@@ -8,4 +8,5 @@ A console application for playing word wheel type games found in many daily news
 
 ---
 
-*Last updated: 4 December 2023*
+*Created: 28 April 2022*  
+*Updated: 28 August 2024*
