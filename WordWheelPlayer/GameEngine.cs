@@ -76,8 +76,21 @@ public partial class GameEngine
                     }
                 }
 
-                if (wordsFoundSoFar.Contains(word) || !word.Contains(keyLetter))
+                if (!word.Contains(keyLetter))
                 {
+                    DisplayMessage($"Word must contain the letter {keyLetter}");
+                    continue;
+                }
+
+                if (wordsFoundSoFar.Contains(word))
+                {
+                    DisplayMessage($"That word was already found");
+                    continue;
+                }
+
+                if (InvalidLetterFound(word, GameLetters, out var badGuy))
+                {
+                    DisplayMessage($"{badGuy} is not a valid letter");
                     continue;
                 }
 
@@ -123,6 +136,21 @@ public partial class GameEngine
 
             DisplayWordTotal(wordCount);
         }
+    }
+
+    private static bool InvalidLetterFound(string guessedWord, string validLetters, out char invalidLetter)
+    {
+        invalidLetter = ' ';
+        foreach (var letter in guessedWord)
+        {
+            if (!validLetters.Contains(letter))
+            {
+                invalidLetter = letter;
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void ResetLetters()
