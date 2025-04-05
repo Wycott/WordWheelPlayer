@@ -1,4 +1,5 @@
-﻿using static System.Console;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using static System.Console;
 
 namespace WordWheelPlayer;
 
@@ -30,10 +31,11 @@ public partial class GameEngine
         return wordCount;
     }
 
-    private static void DisplayWordTotal(int wordCount)
+    private static void DisplayTotals(int wordCount, int score)
     {
         WriteLine();
-        WriteLine($"Total:{wordCount}");
+        WriteLine($"Total: {wordCount}");
+        WriteLine($"Score: {score}");
         WriteLine();
     }
 

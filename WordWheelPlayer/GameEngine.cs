@@ -17,6 +17,10 @@ public partial class GameEngine
 
     private string GameLetters { get; set; } = string.Empty;
 
+    private int Score { get; set; }
+
+    private List<int> fibbers = new() { 1, 2, 3, 5, 8, 13, 21 };
+
     private EnglishDictionary AvailableWords
     {
         get;
@@ -134,6 +138,7 @@ public partial class GameEngine
 
                     if (AvailableWords.WordIsInDictionary(word) && word.Length >= MinLength)
                     {
+                        Score += CalculateWordScore(word);
                         wordsFoundSoFar.Add(word);
                     }
                 }
@@ -149,8 +154,16 @@ public partial class GameEngine
 
             var wordCount = DisplayWordsFound();
 
-            DisplayWordTotal(wordCount);
+            DisplayTotals(wordCount, Score);
         }
+    }
+
+    private int CalculateWordScore(string word)
+    {
+        var index = word.Length - 3;
+        var score = fibbers[index];
+
+        return score;
     }
 
     private static void DisplayTease()
