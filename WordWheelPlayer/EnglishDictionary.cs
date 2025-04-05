@@ -4,15 +4,14 @@ namespace WordWheelPlayer;
 
 public class EnglishDictionary
 {
+    public string? LongestWord { get; set; }
+    public List<string> GameLetters = new();
+
     private readonly List<string> englishDictionary = new();
     private readonly List<LongestWordCandidate> candidateWords = new();
 
     private int MinWordLength { get; }
     private int MaxWordLength { get; }
-
-    public string? LongestWord { get; set; }
-
-    public List<string> GameLetters = new();
 
     public EnglishDictionary(int minWordLength, int maxWordLength)
     {
@@ -45,6 +44,7 @@ public class EnglishDictionary
         }
 
         var firstCandidateWord = candidateWords.MinBy(x => x.SortBy);
+
         LongestWord = firstCandidateWord?.LongestWord;
 
         if (LongestWord != null)
