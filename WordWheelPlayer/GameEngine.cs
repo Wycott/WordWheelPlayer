@@ -50,25 +50,29 @@ public partial class GameEngine
                 {
                     switch (word[1..])
                     {
+                        case "EGG":
+                            DisplayTease();
+                            continue;
                         case "WORDS":
                             DisplayWordsFound();
-                            break;
+                            continue;
                         case "LETTERS":
                             DisplayLetters();
-                            break;
+                            continue;
                         case "HELP":
+                        case "COMMANDS":
                             DisplayInstructions();
-                            break;
+                            continue;
                         case "SHUFFLE":
                             if (GameLetters != null)
                             {
                                 GameLetters = LetterHelper.ShuffleLetters(GameLetters);
                             }
                             DisplayLetters();
-                            break;
+                            continue;
                         case "PEEK": // Easter egg
                             PeekWord();
-                            break;
+                            continue;
                         case "QUIT":
                         case "EXIT":
                             quitGame = true;
@@ -78,6 +82,12 @@ public partial class GameEngine
 
                 if (word.Length == 0)
                 {
+                    continue;
+                }
+
+                if (word.Substring(0, 1) == ":")
+                {
+                    DisplayMessage("Not a valid command");
                     continue;
                 }
 
@@ -141,6 +151,11 @@ public partial class GameEngine
 
             DisplayWordTotal(wordCount);
         }
+    }
+
+    private void DisplayTease()
+    {
+        DisplayMessage("There is. But can you find it?");
     }
 
     private static bool InvalidLetterFound(string guessedWord, string validLetters, out char invalidLetter)

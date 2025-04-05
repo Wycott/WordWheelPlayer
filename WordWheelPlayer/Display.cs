@@ -39,10 +39,29 @@ public partial class GameEngine
 
     private void DisplayLetters()
     {
-        Write(GameLetters);
+        Write(PrepareDisplayLetters(GameLetters));
 
         WriteLine();
         WriteLine();
+    }
+
+    private static string PrepareDisplayLetters(string gameLetters)
+    {
+        var retVal = string.Empty;
+
+        foreach (var letter in gameLetters)
+        {
+            if (letter != '*')
+            {
+                retVal += " " + letter ;
+            }
+            else
+            {
+                retVal += letter;
+            }
+        }
+
+        return retVal;
     }
 
     private static void DisplayMessageLines(List<string> textLines)
@@ -71,7 +90,9 @@ public partial class GameEngine
         var lines = new List<string>
         {
             "",
+            CenterText("------------------"),
             CenterText(".oO WORD WHEEL Oo."),
+            CenterText("------------------"),
             "",
             $"Find as many words of {MinLength} letters or more using the central letter (marked with *)",
             $"There will be at least one word that uses all {MaxLength} letters",
