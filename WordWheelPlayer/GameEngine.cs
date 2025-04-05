@@ -15,7 +15,7 @@ public partial class GameEngine
 
     private string keyLetter = string.Empty;
 
-    private string? GameLetters { get; set; }
+    private string GameLetters { get; set; } = string.Empty;
 
     private EnglishDictionary AvailableWords
     {
@@ -76,6 +76,11 @@ public partial class GameEngine
                     }
                 }
 
+                if (word.Length == 0)
+                {
+                    continue;
+                }
+
                 if (!word.Contains(keyLetter))
                 {
                     DisplayMessage($"Word must contain the letter {keyLetter}");
@@ -84,11 +89,11 @@ public partial class GameEngine
 
                 if (wordsFoundSoFar.Contains(word))
                 {
-                    DisplayMessage($"That word was already found");
+                    DisplayMessage("That word was already found");
                     continue;
                 }
 
-                if (InvalidLetterFound(word, GameLetters, out var badGuy))
+                if (GameLetters != null && InvalidLetterFound(word, GameLetters, out var badGuy))
                 {
                     DisplayMessage($"{badGuy} is not a valid letter");
                     continue;
