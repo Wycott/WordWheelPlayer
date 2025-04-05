@@ -153,7 +153,7 @@ public partial class GameEngine
         }
     }
 
-    private void DisplayTease()
+    private static void DisplayTease()
     {
         DisplayMessage("There is. But can you find it?");
     }
