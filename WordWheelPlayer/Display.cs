@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic.CompilerServices;
-using static System.Console;
+﻿using static System.Console;
 
 namespace WordWheelPlayer;
 
@@ -55,7 +54,7 @@ public partial class GameEngine
         {
             if (letter != '*')
             {
-                retVal += " " + letter ;
+                retVal += " " + letter;
             }
             else
             {
