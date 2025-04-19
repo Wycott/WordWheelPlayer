@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AiAnnotations" Version="1.0.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="words.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
