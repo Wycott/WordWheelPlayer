@@ -1,4 +1,5 @@
-﻿using static System.Console;
+﻿using WordWheelPlayer.Annotations;
+using static System.Console;
 
 namespace WordWheelPlayer;
 
@@ -40,29 +41,48 @@ public partial class GameEngine
 
     private void DisplayLetters()
     {
-        Write(PrepareDisplayLetters(GameLetters));
+        var lettersLines = PrepareDisplayLetters(GameLetters);
+
+        foreach (var line in lettersLines)
+        {
+            WriteLine(line);
+        }
 
         WriteLine();
         WriteLine();
     }
 
-    private static string PrepareDisplayLetters(string gameLetters)
+    [AiGenerated("Only works for a specific number of game letters (9)")]
+    private static List<string> PrepareDisplayLetters(string gameLetters)
     {
-        var retVal = string.Empty;
+        var frontLoadedLetterSet = FrontLoadCentreLetter(gameLetters);
+        var centerChar = frontLoadedLetterSet[0];
+        var surroundingChars = frontLoadedLetterSet.Substring(1, 8).ToCharArray();
 
-        foreach (var letter in gameLetters)
+        return new List<string>
         {
-            if (letter != '*')
-            {
-                retVal += " " + letter;
-            }
-            else
-            {
-                retVal += letter;
-            }
+            $"        {surroundingChars[0]}",
+            $"      {surroundingChars[7]}   {surroundingChars[1]}",
+            $"    {surroundingChars[6]}   {centerChar}   {surroundingChars[2]}",
+            $"      {surroundingChars[5]}   {surroundingChars[3]}",
+            $"        {surroundingChars[4]}"
+        };
+    }
+
+    [AiGenerated]
+    private static string FrontLoadCentreLetter(string gameLetters)
+    {
+        var asteriskIndex = gameLetters.IndexOf('*');
+
+        if (asteriskIndex <= 0 || asteriskIndex == gameLetters.Length - 1)
+        {
+            return gameLetters;
         }
 
-        return retVal;
+        var beforeAsterisk = gameLetters.Substring(asteriskIndex - 1, 1);
+        var afterAsterisk = gameLetters.Substring(0, asteriskIndex - 1) + gameLetters.Substring(asteriskIndex + 1);
+
+        return beforeAsterisk + afterAsterisk;
     }
 
     private static void DisplayMessageLines(List<string> textLines)
