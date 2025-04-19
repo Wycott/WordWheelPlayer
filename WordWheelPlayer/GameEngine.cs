@@ -55,18 +55,23 @@ public partial class GameEngine
                     switch (word[1..])
                     {
                         case "EGG":
+                        case "EASTEREGG":
                             DisplayTease();
                             continue;
+                        case "W":
                         case "WORDS":
                             DisplayWordsFound();
                             continue;
+                        case "L":
                         case "LETTERS":
                             DisplayLetters();
                             continue;
+                        case "H":
                         case "HELP":
                         case "COMMANDS":
                             DisplayInstructions();
                             continue;
+                        case "S":
                         case "SHUFFLE":
                             if (GameLetters != null)
                             {
@@ -77,6 +82,7 @@ public partial class GameEngine
                         case "PEEK": // Easter egg
                             PeekWord();
                             continue;
+                        case "X":
                         case "QUIT":
                         case "EXIT":
                             quitGame = true;

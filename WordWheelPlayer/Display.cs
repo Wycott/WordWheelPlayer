@@ -33,8 +33,8 @@ public partial class GameEngine
     private static void DisplayTotals(int wordCount, int score)
     {
         WriteLine();
-        WriteLine($"Total: {wordCount}");
-        WriteLine($"Score: {score}");
+        WriteLine($"Words Found : {wordCount}");
+        WriteLine($"Score       : {score}");
         WriteLine();
     }
 
