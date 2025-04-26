@@ -6,9 +6,7 @@
 
 A console application for playing word wheel type games found in many daily newspapers.
 
-# Meh
-
 ---
 
 *Created: 2 February 2023*  
-*Updated: 19 April 2025*
+*Updated: 26 April 2025*
