@@ -1,5 +1,4 @@
 ﻿using WordWheelPlayer.Helpers;
-//using static System.Console;
 
 namespace WordWheelPlayer;
 
