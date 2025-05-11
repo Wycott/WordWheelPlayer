@@ -26,6 +26,7 @@ public class GameLetterTests
     }
 
     [Fact]
+    [AiGenerated("Merged arrange and act")]
     public void GameLetter_ShouldAllowPropertyChanges()
     {
         // Arrange/Act
