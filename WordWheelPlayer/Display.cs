@@ -1,5 +1,4 @@
 ﻿using AiAnnotations;
-//using static System.Console;
 
 namespace WordWheelPlayer;
 
@@ -19,7 +18,7 @@ public partial class GameEngine
 
         foreach (var foundWord in wordsFoundSoFar)
         {
-            WriteLine(foundWord);
+            ConsoleOperations.WriteOutput(foundWord);
             wordCount++;
         }
 
@@ -31,12 +30,12 @@ public partial class GameEngine
         return wordCount;
     }
 
-    private static void DisplayTotals(int wordCount, int score)
+    private void DisplayTotals(int wordCount, int score)
     {
-        WriteLine();
-        WriteLine($"Words Found : {wordCount}");
-        WriteLine($"Score       : {score}");
-        WriteLine();
+        ConsoleOperations.WriteEmptyLine();
+        ConsoleOperations.WriteOutput($"Words Found : {wordCount}");
+        ConsoleOperations.WriteOutput($"Score       : {score}");
+        ConsoleOperations.WriteEmptyLine();
     }
 
     private void DisplayLetters()
@@ -45,11 +44,11 @@ public partial class GameEngine
 
         foreach (var line in lettersLines)
         {
-            WriteLine(line);
+            ConsoleOperations.WriteOutput(line);
         }
 
-        WriteLine();
-        WriteLine();
+        ConsoleOperations.WriteEmptyLine();
+        ConsoleOperations.WriteEmptyLine();
     }
 
     [AiGenerated("Only works for a specific number of game letters (9)")]
@@ -85,28 +84,28 @@ public partial class GameEngine
         return beforeAsterisk + afterAsterisk;
     }
 
-    private static void DisplayMessageLines(List<string> textLines)
+    private void DisplayMessageLines(List<string> textLines)
     {
-        var currentForeground = ForegroundColor;
+        var currentForeground = ConsoleOperations.ForegroundColour;
 
-        ForegroundColor = ConsoleColor.Yellow;
+        ConsoleOperations.ForegroundColour = ConsoleColor.Yellow;
 
         foreach (var line in textLines)
         {
-            WriteLine(line);
+            ConsoleOperations.WriteOutput(line);
         }
 
-        ForegroundColor = currentForeground;
+        ConsoleOperations.ForegroundColour = currentForeground;
     }
 
-    private static void DisplayMessage(string text)
+    private void DisplayMessage(string text)
     {
         var lines = new List<string> { text };
 
         DisplayMessageLines(lines);
     }
 
-    private static void DisplayInstructions()
+    private void DisplayInstructions()
     {
         var lines = new List<string>
         {

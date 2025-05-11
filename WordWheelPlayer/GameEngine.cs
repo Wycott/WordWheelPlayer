@@ -21,6 +21,11 @@ public partial class GameEngine
 
     private List<int> fibbers = new() { 1, 2, 3, 5, 8, 13, 21 };
 
+    private IGameConsole ConsoleOperations
+    {
+        get;
+    }
+
     private EnglishDictionary AvailableWords
     {
         get;
@@ -28,8 +33,9 @@ public partial class GameEngine
 
     private readonly List<string> lettersToUse;
 
-    public GameEngine()
+    public GameEngine(IGameConsole consoleOperations)
     {
+        ConsoleOperations = consoleOperations;
         AvailableWords = new EnglishDictionary(MinLength, MaxLength);
         AvailableWords.InitDictionary();
         lettersToUse = AvailableWords.GameLetters;
@@ -43,8 +49,8 @@ public partial class GameEngine
 
         while (!quitGame)
         {
-            var word = ReadLine();
-            WriteLine();
+            var word = ConsoleOperations.ReadInput();
+            ConsoleOperations.WriteEmptyLine();
 
             if (word != null)
             {
@@ -154,7 +160,7 @@ public partial class GameEngine
 
             wordsFoundSoFar.Sort();
 
-            Clear();
+            ConsoleOperations.Cls();
 
             DisplayLetters();
 
@@ -172,7 +178,7 @@ public partial class GameEngine
         return score;
     }
 
-    private static void DisplayTease()
+    private void DisplayTease()
     {
         DisplayMessage("There is. But can you find it?");
     }
