@@ -10,8 +10,8 @@ public class EnglishDictionary
     private readonly List<string> englishDictionary = new();
     private readonly List<LongestWordCandidate> candidateWords = new();
 
-    private int MinWordLength { get; }
-    private int MaxWordLength { get; }
+    public int MinWordLength { get; }
+    public int MaxWordLength { get; }
 
     public EnglishDictionary(int minWordLength, int maxWordLength)
     {
