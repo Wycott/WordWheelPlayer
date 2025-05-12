@@ -1,4 +1,5 @@
 ﻿using AiAnnotations;
+using WordWheelPlayer.Helpers;
 
 namespace WordWheelPlayer;
 
@@ -10,6 +11,11 @@ public partial class GameEngine
         {
             DisplayMessage(AvailableWords.LongestWord);
         }
+    }
+
+    private void DisplayTease()
+    {
+        DisplayMessage("There is. But can you find it?");
     }
 
     private int DisplayWordsFound()
@@ -110,9 +116,9 @@ public partial class GameEngine
         var lines = new List<string>
         {
             "",
-            CenterText("------------------"),
-            CenterText(".oO WORD WHEEL Oo."),
-            CenterText("------------------"),
+            DisplayHelper.CenterText("------------------"),
+            DisplayHelper.CenterText(".oO WORD WHEEL Oo."),
+            DisplayHelper.CenterText("------------------"),
             "",
             $"Find as many words of {MinLength} letters or more using the central letter (marked with *)",
             $"There will be at least one word that uses all {MaxLength} letters",
@@ -127,14 +133,5 @@ public partial class GameEngine
         };
 
         DisplayMessageLines(lines);
-    }
-
-    private static string CenterText(string text)
-    {
-        const int Width = 80;
-
-        var padSize = (Width - text.Length) / 2;
-
-        return new string(' ', padSize) + text;
     }
 }

@@ -18,8 +18,6 @@ public partial class GameEngine
 
     private int Score { get; set; }
 
-    private List<int> fibbers = new() { 1, 2, 3, 5, 8, 13, 21 };
-
     private IGameConsole ConsoleOperations
     {
         get;
@@ -106,12 +104,6 @@ public partial class GameEngine
                     continue;
                 }
 
-                if (!word.Contains(keyLetter))
-                {
-                    DisplayMessage($"Word must contain the letter {keyLetter}");
-                    continue;
-                }
-
                 if (wordsFoundSoFar.Contains(word))
                 {
                     DisplayMessage("That word was already found");
@@ -121,6 +113,12 @@ public partial class GameEngine
                 if (GameLetters != null && InvalidLetterFound(word, GameLetters, out var badGuy))
                 {
                     DisplayMessage($"{badGuy} is not a valid letter");
+                    continue;
+                }
+
+                if (!word.Contains(keyLetter))
+                {
+                    DisplayMessage($"Word must contain the letter {keyLetter}");
                     continue;
                 }
 
@@ -149,7 +147,7 @@ public partial class GameEngine
 
                     if (AvailableWords.WordIsInDictionary(word) && word.Length >= MinLength)
                     {
-                        Score += CalculateWordScore(word);
+                        Score += ScoreHelper.CalculateWordScore(word);
                         wordsFoundSoFar.Add(word);
                     }
                 }
@@ -169,22 +167,10 @@ public partial class GameEngine
         }
     }
 
-    private int CalculateWordScore(string word)
-    {
-        var index = word.Length - 3;
-        var score = fibbers[index];
-
-        return score;
-    }
-
-    private void DisplayTease()
-    {
-        DisplayMessage("There is. But can you find it?");
-    }
-
     private static bool InvalidLetterFound(string guessedWord, string validLetters, out char invalidLetter)
     {
         invalidLetter = ' ';
+
         foreach (var letter in guessedWord)
         {
             if (!validLetters.Contains(letter))
