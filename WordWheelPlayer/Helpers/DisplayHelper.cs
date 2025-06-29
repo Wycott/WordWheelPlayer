@@ -1,19 +1,18 @@
-﻿namespace WordWheelPlayer.Helpers
+﻿namespace WordWheelPlayer.Helpers;
+
+public static class DisplayHelper
 {
-    public static class DisplayHelper
+    public static string CenterText(string text)
     {
-        public static string CenterText(string text)
+        const int Width = 80;
+
+        if (text.Length > Width)
         {
-            const int Width = 80;
-
-            if (text.Length > Width)
-            {
-                return text; 
-            }
-
-            var padSize = (Width - text.Length) / 2;
-
-            return new string(' ', padSize) + text;
+            return text; 
         }
+
+        var padSize = (Width - text.Length) / 2;
+
+        return new string(' ', padSize) + text;
     }
 }

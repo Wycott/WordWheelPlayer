@@ -1,22 +1,21 @@
-﻿namespace WordWheelPlayer.Helpers
+﻿namespace WordWheelPlayer.Helpers;
+
+public static class ScoreHelper
 {
-    public static class ScoreHelper
+    private static readonly List<int> FibonacciNumbers = new() { 1, 2, 3, 5, 8, 13, 21 };
+
+    public static int CalculateWordScore(string word)
     {
-        private static readonly List<int> FibonacciNumbers = new() { 1, 2, 3, 5, 8, 13, 21 };
+        const int MinWordSize = 3;
 
-        public static int CalculateWordScore(string word)
+        if (word.Length < MinWordSize)
         {
-            const int MinWordSize = 3;
-
-            if (word.Length < MinWordSize)
-            {
-                return 0;
-            }
-
-            var index = word.Length - MinWordSize;
-            var score = FibonacciNumbers[index];
-
-            return score;
+            return 0;
         }
+
+        var index = word.Length - MinWordSize;
+        var score = FibonacciNumbers[index];
+
+        return score;
     }
 }
