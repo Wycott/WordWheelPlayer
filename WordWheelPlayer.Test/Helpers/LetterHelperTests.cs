@@ -32,7 +32,7 @@ public class LetterHelperTests
 
         // Assert
         Assert.Equal(Input.Length, result.Length);
-        Assert.True(result.Contains("*"));
+        Assert.Contains("*", result);
         Assert.True(result.Replace("*", "").All(c => Input.Contains(c)));
     }
 
