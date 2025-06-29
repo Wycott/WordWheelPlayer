@@ -55,7 +55,7 @@ public partial class GameEngine
         var bestGame = BestScoreHelper.CheckForBestScore(score);
 
         ConsoleOperations.WriteOutput($"Best Score       : {bestGame.BestScore}");
-        ConsoleOperations.WriteOutput($"Best Score Date  : {bestGame.WhenAchieved}");
+        ConsoleOperations.WriteOutput($"Best Score Date  : {bestGame.WhenAchieved(WhenStarted)}");
         ConsoleOperations.WriteEmptyLine();
     }
 
