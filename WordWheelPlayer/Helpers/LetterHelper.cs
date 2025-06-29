@@ -6,6 +6,7 @@ public static class LetterHelper
     {
         var retVal = string.Empty;
 
+        // HACK: There is an issue if the middle letter is at the end so stop this happening for now
         while (letters.Length > 0 && (retVal.Length == 0 || retVal[^1] == '*'))
         {
             retVal = TryShuffleLetters(letters);

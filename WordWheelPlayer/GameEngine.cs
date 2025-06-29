@@ -75,7 +75,11 @@ public partial class GameEngine
                             DisplayInstructions();
                             continue;
                         case "S":
-                        case "SHUFFLE":
+                        case "SCORE":
+                            DisplayBestAndCurrentScore(wordsFoundSoFar.Count, Score);
+                            continue;
+                        case "M":
+                        case "MIX":
                             if (GameLetters != null)
                             {
                                 GameLetters = LetterHelper.ShuffleLetters(GameLetters);
@@ -163,8 +167,7 @@ public partial class GameEngine
 
             var wordCount = DisplayWordsFound();
 
-            DisplayTotals(wordCount, Score);
-            DisplayBestTotals(Score);
+            DisplayBestAndCurrentScore(wordCount, Score);
         }
     }
 

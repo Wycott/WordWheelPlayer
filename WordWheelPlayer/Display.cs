@@ -36,6 +36,12 @@ public partial class GameEngine
         return wordCount;
     }
 
+    private void DisplayBestAndCurrentScore(int wordCount, int score)
+    {
+        DisplayTotals(wordCount, Score);
+        DisplayBestTotals(Score);
+    }
+
     private void DisplayTotals(int wordCount, int score)
     {
         ConsoleOperations.WriteEmptyLine();
@@ -135,7 +141,8 @@ public partial class GameEngine
             "The game supports the following commands:",
             "\t:LETTERS - to display letters",
             "\t:WORDS   - to display words found so far",
-            "\t:SHUFFLE - shuffle the letters",
+            "\t:MIX     - mix up the letters",
+            "\t:SCORE   - show the current (and best) score",
             "\t:HELP    - display this text",
             "\t:EXIT    - to quit",
             ""
