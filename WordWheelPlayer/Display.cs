@@ -44,11 +44,10 @@ public partial class GameEngine
         ConsoleOperations.WriteEmptyLine();
     }
 
-    private void DisplayBestTotals(int wordCount, int score)
+    private void DisplayBestTotals(int score)
     {
-        var bestGame = BestScoreHelper.CheckForBestScore(wordCount, score);
+        var bestGame = BestScoreHelper.CheckForBestScore(score);
 
-        ConsoleOperations.WriteOutput($"Best Words Found : {bestGame.BestWords}");
         ConsoleOperations.WriteOutput($"Best Score       : {bestGame.BestScore}");
         ConsoleOperations.WriteOutput($"Best Score Date  : {bestGame.BestDate}");
         ConsoleOperations.WriteEmptyLine();

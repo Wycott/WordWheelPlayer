@@ -9,17 +9,16 @@ public static class BestScoreHelper
 {
     private const string FilePath = "BestGame.json";
 
-    public static BestGame CheckForBestScore(int wordCount, int score)
+    public static BestGame CheckForBestScore(int score)
     {
         var bestGameSoFar = LoadGame();
 
-        if (score <= bestGameSoFar.BestScore && wordCount <= bestGameSoFar.BestWords)
+        if (score <= bestGameSoFar.BestScore)
         {
             return bestGameSoFar;
         }
 
         bestGameSoFar.BestScore = score;
-        bestGameSoFar.BestWords = wordCount;
         bestGameSoFar.BestDate = DateTime.Now;
 
         SaveGame(bestGameSoFar);
@@ -34,7 +33,6 @@ public static class BestScoreHelper
             var defaultGame = new BestGame
             {
                 BestScore = 0,
-                BestWords = 0,
                 BestDate = DateTime.Now
             };
 

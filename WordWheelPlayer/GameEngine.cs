@@ -164,7 +164,7 @@ public partial class GameEngine
             var wordCount = DisplayWordsFound();
 
             DisplayTotals(wordCount, Score);
-            DisplayBestTotals(wordCount, Score);
+            DisplayBestTotals(Score);
         }
     }
 
