@@ -39,8 +39,18 @@ public partial class GameEngine
     private void DisplayTotals(int wordCount, int score)
     {
         ConsoleOperations.WriteEmptyLine();
-        ConsoleOperations.WriteOutput($"Words Found : {wordCount}");
-        ConsoleOperations.WriteOutput($"Score       : {score}");
+        ConsoleOperations.WriteOutput($"Words Found      : {wordCount}");
+        ConsoleOperations.WriteOutput($"Score            : {score}");
+        ConsoleOperations.WriteEmptyLine();
+    }
+
+    private void DisplayBestTotals(int wordCount, int score)
+    {
+        var bestGame = BestScoreHelper.CheckForBestScore(wordCount, score);
+
+        ConsoleOperations.WriteOutput($"Best Words Found : {bestGame.BestWords}");
+        ConsoleOperations.WriteOutput($"Best Score       : {bestGame.BestScore}");
+        ConsoleOperations.WriteOutput($"Best Score Date  : {bestGame.BestDate}");
         ConsoleOperations.WriteEmptyLine();
     }
 
