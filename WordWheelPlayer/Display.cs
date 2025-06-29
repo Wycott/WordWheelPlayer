@@ -38,8 +38,8 @@ public partial class GameEngine
 
     private void DisplayBestAndCurrentScore(int wordCount, int score)
     {
-        DisplayTotals(wordCount, Score);
-        DisplayBestTotals(Score);
+        DisplayTotals(wordCount, score);
+        DisplayBestTotals(score);
     }
 
     private void DisplayTotals(int wordCount, int score)

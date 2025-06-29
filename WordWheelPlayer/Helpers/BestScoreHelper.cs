@@ -42,7 +42,9 @@ public static class BestScoreHelper
 
         var json = File.ReadAllText(FilePath);
 
-        return JsonSerializer.Deserialize<BestGame>(json);
+        var retVal = JsonSerializer.Deserialize<BestGame>(json) ?? default(BestGame);
+
+        return retVal ?? new BestGame { BestScore = 0, BestDate = DateTime.Now };
     }
 
     public static void SaveGame(BestGame game)

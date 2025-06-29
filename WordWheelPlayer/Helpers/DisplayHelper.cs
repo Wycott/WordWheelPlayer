@@ -8,7 +8,7 @@ public static class DisplayHelper
 
         if (text.Length > Width)
         {
-            return text; 
+            return text;
         }
 
         var padSize = (Width - text.Length) / 2;
