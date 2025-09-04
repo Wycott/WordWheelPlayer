@@ -37,6 +37,7 @@ public static class BestScoreHelper
             };
 
             SaveGame(defaultGame);
+
             return defaultGame;
         }
 
