@@ -1,4 +1,4 @@
-﻿using AiAnnotations;
+using AiAnnotations;
 using AiAnnotations.Types;
 
 namespace WordWheelPlayer.Test;

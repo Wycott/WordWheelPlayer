@@ -1,4 +1,4 @@
-﻿using AiAnnotations;
+using AiAnnotations;
 using WordWheelPlayer.Helpers;
 
 namespace WordWheelPlayer;
@@ -68,7 +68,6 @@ public partial class GameEngine
             ConsoleOperations.WriteOutput(line);
         }
 
-        ConsoleOperations.WriteEmptyLine();
         ConsoleOperations.WriteEmptyLine();
     }
 

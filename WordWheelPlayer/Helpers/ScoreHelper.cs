@@ -1,4 +1,4 @@
-﻿namespace WordWheelPlayer.Helpers;
+namespace WordWheelPlayer.Helpers;
 
 public static class ScoreHelper
 {

@@ -1,9 +1,7 @@
-﻿namespace WordWheelPlayer.Test;
-
-using AiAnnotations.Types;
 using AiAnnotations;
-using WordWheelPlayer;
-using Xunit;
+using AiAnnotations.Types;
+
+namespace WordWheelPlayer.Test;
 
 [AiGenerated(Authorship.MostlyAi)]
 public class GameLetterTests

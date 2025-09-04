@@ -1,4 +1,4 @@
-﻿namespace WordWheelPlayer;
+namespace WordWheelPlayer;
 
 public class GameLetter
 {

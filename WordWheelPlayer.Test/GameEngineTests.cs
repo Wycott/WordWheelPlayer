@@ -1,5 +1,5 @@
-﻿using AiAnnotations.Types;
 using AiAnnotations;
+using AiAnnotations.Types;
 using Moq;
 
 namespace WordWheelPlayer.Test;

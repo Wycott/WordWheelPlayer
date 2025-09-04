@@ -1,4 +1,4 @@
-﻿using WordWheelPlayer.Helpers;
+using WordWheelPlayer.Helpers;
 
 namespace WordWheelPlayer;
 
@@ -182,6 +182,7 @@ public partial class GameEngine
             if (!validLetters.Contains(letter))
             {
                 invalidLetter = letter;
+
                 return true;
             }
         }
