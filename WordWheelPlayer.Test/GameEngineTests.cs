@@ -187,4 +187,23 @@ public class GameEngineTests
         mockConsole.Verify(c => c.ReadInput(), Times.Exactly(2));
         mockConsole.Verify(c => c.WriteOutput("Not a valid command"), Times.Once);
     }
+
+    [Fact]
+    public void Start_ShouldRejectWordEndingInS()
+    {
+        // Arrange
+        var mockConsole = new Mock<IGameConsole>();
+        mockConsole.SetupSequence(c => c.ReadInput())
+            .Returns("TESTS")
+            .Returns(":QUIT");
+
+        var gameEngine = new GameEngine(mockConsole.Object);
+
+        // Act
+        gameEngine.Start();
+
+        // Assert
+        mockConsole.Verify(c => c.ReadInput(), Times.Exactly(2));
+        mockConsole.Verify(c => c.WriteOutput("Words may not end in S - sorry!"), Times.Once);
+    }
 }

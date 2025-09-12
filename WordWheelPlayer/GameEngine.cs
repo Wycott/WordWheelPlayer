@@ -104,6 +104,12 @@ public partial class GameEngine
                     continue;
                 }
 
+                if (word.EndsWith("S"))
+                {
+                    DisplayMessage("Words may not end in S - sorry!");
+                    continue;
+                }
+
                 if (word.Substring(0, 1) == ":")
                 {
                     DisplayMessage("Not a valid command");
