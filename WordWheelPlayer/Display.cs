@@ -136,6 +136,8 @@ public partial class GameEngine
             "",
             $"Find as many words of {MinLength} letters or more using the central letter",
             "",
+            $"Words may not end with the letter S",
+            "",
             $"There will be at least one word that uses all {MaxLength} letters",
             "",
             "The game supports the following commands:",
