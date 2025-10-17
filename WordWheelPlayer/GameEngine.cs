@@ -80,6 +80,10 @@ public partial class GameEngine
                         case "SCORE":
                             DisplayBestAndCurrentScore(wordsFoundSoFar.Count, Score);
                             continue;
+                        case "V":
+                        case "VERSION":
+                            DisplayVersion();
+                            continue;
                         case "M":
                         case "MIX":
                             if (GameLetters != null)

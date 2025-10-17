@@ -1,4 +1,5 @@
 using AiAnnotations;
+using System.Reflection;
 using WordWheelPlayer.Helpers;
 
 namespace WordWheelPlayer;
@@ -69,6 +70,24 @@ public partial class GameEngine
         }
 
         ConsoleOperations.WriteEmptyLine();
+    }
+
+    private void DisplayVersion()
+    {
+        var currentForeground = ConsoleOperations.ForegroundColour;
+
+        ConsoleOperations.ForegroundColour = ConsoleColor.White;
+
+            var exePath = Assembly.GetExecutingAssembly().Location;
+            var buildDate = File.GetLastWriteTime(exePath);
+            const string Feature = "Add version option";
+
+            ConsoleOperations.WriteOutput($"Feature   : {Feature}");
+            ConsoleOperations.WriteOutput($"Build date: {buildDate}");
+
+            ConsoleOperations.WriteEmptyLine();
+
+        ConsoleOperations.ForegroundColour = currentForeground;
     }
 
     [AiGenerated("Only works for a specific number of game letters (9)")]
@@ -145,6 +164,7 @@ public partial class GameEngine
             "\t:WORDS   - to display the words found so far",
             "\t:MIX     - mix up the letters",
             "\t:SCORE   - show the current (and best) score",
+            "\t:VERSION - show version information",
             "\t:HELP    - display this text",
             "\t:EXIT    - to quit",
             ""
