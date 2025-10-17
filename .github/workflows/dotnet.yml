@@ -4,8 +4,8 @@ on:
   push:
     paths-ignore:
       - "README.md"
-      - "words.txt"
-      - "words.bak"
+      - "**/words.txt"
+      - "/**words.bak"
 env:
   SOLUTION_FILE: $Env:GITHUB_WORKSPACE\WordWheelPlayer.sln
 
