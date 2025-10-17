@@ -30,12 +30,20 @@ public partial class GameEngine
         get;
     }
 
-    private readonly List<string> lettersToUse;
+    private List<string> lettersToUse;
 
     public GameEngine(IGameConsole consoleOperations)
     {
         ConsoleOperations = consoleOperations;
         AvailableWords = new EnglishDictionary(MinLength, MaxLength);
+        RunPreGame();
+    }
+
+    private void RunPreGame()
+    {
+        gameLetters.Clear();
+        Score = 0;
+        wordsFoundSoFar.Clear();
         AvailableWords.InitDictionary();
         lettersToUse = AvailableWords.GameLetters;
         DisplayInstructions();
@@ -75,6 +83,10 @@ public partial class GameEngine
                         case "HELP":
                         case "COMMANDS":
                             DisplayInstructions();
+                            continue;
+                        case "R":
+                        case "RESTART":
+                            RunPreGame();
                             continue;
                         case "S":
                         case "SCORE":

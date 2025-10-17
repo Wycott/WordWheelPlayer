@@ -21,6 +21,8 @@ public class EnglishDictionary
 
     public void InitDictionary()
     {
+        candidateWords.Clear();
+
         const string RegExPattern = "^[a-zA-Z]+$";
 
         using var sr = new StreamReader("words.txt");

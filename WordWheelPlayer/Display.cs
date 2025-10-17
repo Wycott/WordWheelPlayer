@@ -80,7 +80,7 @@ public partial class GameEngine
 
             var exePath = Assembly.GetExecutingAssembly().Location;
             var buildDate = File.GetLastWriteTime(exePath);
-            const string Feature = "Add version option";
+            const string Feature = "Add restart option";
 
             ConsoleOperations.WriteOutput($"Feature   : {Feature}");
             ConsoleOperations.WriteOutput($"Build date: {buildDate}");
@@ -164,6 +164,7 @@ public partial class GameEngine
             "\t:WORDS   - to display the words found so far",
             "\t:MIX     - mix up the letters",
             "\t:SCORE   - show the current (and best) score",
+            "\t:RESTART - restart the game with new letters",
             "\t:VERSION - show version information",
             "\t:HELP    - display this text",
             "\t:EXIT    - to quit",
