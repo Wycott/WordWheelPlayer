@@ -3,8 +3,9 @@ name: CI
 on:
   push:
     paths-ignore:
-      - 'README.md'
-      
+      - README.md
+      - words.txt
+      - words.bak
 env:
   SOLUTION_FILE: $Env:GITHUB_WORKSPACE\WordWheelPlayer.sln
 
@@ -24,3 +25,5 @@ jobs:
            
       - name: Run Tests
         run: dotnet test -v n $SOLUTION_FILE
+
+
