@@ -12,7 +12,7 @@ public class DisplayHelperTests
     {
         // Arrange
         const string Input = "Hello";
-        var expectedPadding = (80 - Input.Length) / 2;
+        var expectedPadding = (64 - Input.Length) / 2;
         var expectedOutput = new string(' ', expectedPadding) + Input;
 
         // Act
@@ -27,7 +27,7 @@ public class DisplayHelperTests
     {
         // Arrange
         const string Input = "";
-        var expectedOutput = new string(' ', 40); // Half of 80
+        var expectedOutput = new string(' ', 32); // Half of 80
 
         // Act
         var actualOutput = DisplayHelper.CenterText(Input);
