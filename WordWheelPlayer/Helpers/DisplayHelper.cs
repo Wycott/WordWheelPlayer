@@ -4,7 +4,7 @@ public static class DisplayHelper
 {
     public static string CenterText(string text)
     {
-        const int Width = 80;
+        const int Width = 64;
 
         if (text.Length > Width)
         {
