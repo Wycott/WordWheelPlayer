@@ -2,16 +2,16 @@ namespace WordWheelPlayer.Helpers;
 
 public static class DisplayHelper
 {
+    public static int GameTextWidth => 64;
+
     public static string CenterText(string text)
     {
-        const int Width = 64;
-
-        if (text.Length > Width)
+        if (text.Length > GameTextWidth)
         {
             return text;
         }
 
-        var padSize = (Width - text.Length) / 2;
+        var padSize = (GameTextWidth - text.Length) / 2;
 
         return new string(' ', padSize) + text;
     }

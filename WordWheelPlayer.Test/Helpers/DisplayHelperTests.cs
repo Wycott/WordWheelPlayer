@@ -12,7 +12,8 @@ public class DisplayHelperTests
     {
         // Arrange
         const string Input = "Hello";
-        var expectedPadding = (64 - Input.Length) / 2;
+
+        var expectedPadding = (DisplayHelper.GameTextWidth - Input.Length) / 2;
         var expectedOutput = new string(' ', expectedPadding) + Input;
 
         // Act
@@ -27,7 +28,8 @@ public class DisplayHelperTests
     {
         // Arrange
         const string Input = "";
-        var expectedOutput = new string(' ', 32); // Half of 80
+
+        var expectedOutput = new string(' ', DisplayHelper.GameTextWidth / 2); // Half of width
 
         // Act
         var actualOutput = DisplayHelper.CenterText(Input);
@@ -41,13 +43,12 @@ public class DisplayHelperTests
     {
         // Arrange
         var input = new string('X', 80); // Exactly full width
-        var expectedOutput = input; // No padding needed
 
         // Act
         var actualOutput = DisplayHelper.CenterText(input);
 
         // Assert
-        Assert.Equal(expectedOutput, actualOutput);
+        Assert.Equal(input, actualOutput);
     }
 
     [Fact]
