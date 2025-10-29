@@ -8,6 +8,6 @@ internal class Program
     private static void Main()
     {
         var engine = new GameEngine(new GameConsole());
-        engine.Start()
+        engine.Start();
     }
 }
