@@ -60,16 +60,22 @@ public partial class GameEngine
         ConsoleOperations.WriteEmptyLine();
     }
 
+    private void DisplayInitialLetters()
+    {
+        DisplayLetters();
+        ConsoleOperations.WriteEmptyLine();
+    }
+
     private void DisplayLetters()
     {
+        ConsoleOperations.WriteEmptyLine();
+
         var lettersLines = PrepareDisplayLetters(GameLetters);
 
         foreach (var line in lettersLines)
         {
             ConsoleOperations.WriteOutput(line);
         }
-
-        ConsoleOperations.WriteEmptyLine();
     }
 
     private void DisplayVersion()
@@ -97,14 +103,14 @@ public partial class GameEngine
         var centerChar = frontLoadedLetterSet[0];
         var surroundingChars = frontLoadedLetterSet.Substring(1, 8).ToCharArray();
 
-        return new List<string>
-        {
+        return
+        [
             $"        {surroundingChars[0]}",
             $"      {surroundingChars[7]}   {surroundingChars[1]}",
             $"    {surroundingChars[6]}   {centerChar}   {surroundingChars[2]}",
             $"      {surroundingChars[5]}   {surroundingChars[3]}",
             $"        {surroundingChars[4]}"
-        };
+        ];
     }
 
     [AiGenerated]
@@ -170,7 +176,6 @@ public partial class GameEngine
             "\t:HELP    - display this text",
             "",
             "\t:EXIT    - to quit",
-            ""
         };
 
         DisplayMessageLines(lines);

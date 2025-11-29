@@ -2,22 +2,16 @@ using System.Text.RegularExpressions;
 
 namespace WordWheelPlayer;
 
-public class EnglishDictionary
+public class EnglishDictionary(int minWordLength, int maxWordLength)
 {
     public string? LongestWord { get; set; }
-    public List<string> GameLetters = new();
+    public List<string> GameLetters = [];
 
-    private readonly List<string> englishDictionary = new();
-    private readonly List<LongestWordCandidate> candidateWords = new();
+    private readonly List<string> englishDictionary = [];
+    private readonly List<LongestWordCandidate> candidateWords = [];
 
-    public int MinWordLength { get; }
-    public int MaxWordLength { get; }
-
-    public EnglishDictionary(int minWordLength, int maxWordLength)
-    {
-        MinWordLength = minWordLength;
-        MaxWordLength = maxWordLength;
-    }
+    public int MinWordLength { get; } = minWordLength;
+    public int MaxWordLength { get; } = maxWordLength;
 
     public void InitDictionary()
     {

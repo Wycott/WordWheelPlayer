@@ -8,9 +8,9 @@ public partial class GameEngine
 
     private const int MaxLength = 9;
 
-    private readonly List<string> wordsFoundSoFar = new();
+    private readonly List<string> wordsFoundSoFar = [];
 
-    private readonly List<GameLetter> gameLetters = new();
+    private readonly List<GameLetter> gameLetters = [];
 
     private string keyLetter = string.Empty;
 
@@ -187,9 +187,9 @@ public partial class GameEngine
 
             ConsoleOperations.Cls();
 
-            DisplayLetters();
-
             var wordCount = DisplayWordsFound();
+
+            DisplayLetters();
 
             DisplayBestAndCurrentScore(wordCount, Score);
         }
@@ -247,6 +247,6 @@ public partial class GameEngine
 
         GameLetters = LetterHelper.ShuffleLetters(GameLetters);
 
-        DisplayLetters();
+        DisplayInitialLetters();
     }
 }

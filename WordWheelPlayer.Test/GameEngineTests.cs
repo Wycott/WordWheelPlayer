@@ -24,7 +24,6 @@ public class GameEngineTests
         mockConsole.Verify(c => c.ReadInput(), Times.Once); // Ensures command was read
     }
 
-
     [Fact]
     public void Start_ShouldDisplayWordsFound()
     {

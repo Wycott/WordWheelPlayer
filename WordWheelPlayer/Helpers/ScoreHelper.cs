@@ -2,7 +2,7 @@ namespace WordWheelPlayer.Helpers;
 
 public static class ScoreHelper
 {
-    private static readonly List<int> FibonacciNumbers = new() { 1, 2, 3, 5, 8, 13, 21 };
+    private static readonly List<int> FibonacciNumbers = [1, 2, 3, 5, 8, 13, 21];
 
     public static int CalculateWordScore(string word)
     {
