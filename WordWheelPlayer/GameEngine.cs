@@ -30,7 +30,7 @@ public partial class GameEngine
         get;
     }
 
-    private List<string> lettersToUse;
+    private List<string> lettersToUse = [];
 
     public GameEngine(IGameConsole consoleOperations)
     {
