@@ -84,10 +84,11 @@ public partial class GameEngine
 
         ConsoleOperations.ForegroundColour = ConsoleColor.White;
         {
-            var exePath = Assembly.GetExecutingAssembly().Location;
-            var buildDate = File.GetLastWriteTime(exePath);
             const string Feature = "Add restart option";
 
+            var exePath = Assembly.GetExecutingAssembly().Location;
+            var buildDate = File.GetLastWriteTime(exePath);
+            
             ConsoleOperations.WriteOutput($"Feature   : {Feature}");
             ConsoleOperations.WriteOutput($"Build date: {buildDate}");
 
