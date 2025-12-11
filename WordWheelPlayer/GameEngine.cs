@@ -19,6 +19,29 @@ public partial class GameEngine
     private int Score { get; set; }
 
     private DateTime WhenStarted { get; } = DateTime.Now;
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private IGameConsole ConsoleOperations
     {
@@ -52,6 +75,10 @@ public partial class GameEngine
 
     public void Start()
     {
+        {
+            // Heh
+        }
+
         var quitGame = false;
 
         while (!quitGame)
