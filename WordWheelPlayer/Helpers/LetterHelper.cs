@@ -28,7 +28,8 @@ public static class LetterHelper
             }
             else
             {
-                shuffleLetters.Add(new GameLetter { Letter = letter.ToString() });
+                var newLetter = new GameLetter { Letter = letter.ToString() };
+                shuffleLetters.Add(newLetter);
             }
         }
 
