@@ -88,7 +88,7 @@ public partial class GameEngine
 
             var exePath = Assembly.GetExecutingAssembly().Location;
             var buildDate = File.GetLastWriteTime(exePath);
-            
+
             ConsoleOperations.WriteOutput($"Feature   : {Feature}");
             ConsoleOperations.WriteOutput($"Build date: {buildDate}");
 

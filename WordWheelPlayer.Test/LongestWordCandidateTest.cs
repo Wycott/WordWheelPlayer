@@ -7,6 +7,7 @@ public class LongestWordCandidateTest
     {
         // Arrange
         const string ExpectedLongestWord = "antidisestablishmentarianism";
+
         var expectedSortBy = Guid.Empty.ToString();
 
         // Act
