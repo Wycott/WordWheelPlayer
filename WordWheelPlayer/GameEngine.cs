@@ -57,6 +57,7 @@ public partial class GameEngine
         while (!quitGame)
         {
             var word = ConsoleOperations.ReadInput();
+            
             ConsoleOperations.WriteEmptyLine();
 
             if (word != null)
