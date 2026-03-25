@@ -120,9 +120,9 @@ public partial class GameEngine
                     continue;
                 }
 
-                if (word.EndsWith('S'))
+                if (word.EndsWith('S') && !word.EndsWith("SS"))
                 {
-                    DisplayMessage("Words may not end in S - sorry!");
+                    DisplayMessage("Words may not end in S (-SS is allowed)");
                     continue;
                 }
 
