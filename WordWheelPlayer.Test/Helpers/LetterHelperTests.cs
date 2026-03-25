@@ -27,6 +27,18 @@ public class LetterHelperTests
         // Arrange
         const string Input = "AB*C";
 
+
+
+
+
+
+
+
+
+
+
+
+
         // Act
         var result = LetterHelper.ShuffleLetters(Input);
 
