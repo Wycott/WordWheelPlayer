@@ -10,13 +10,13 @@ public class LetterHelperTests
     [Fact]
     public void ShuffleLetters_ShouldReturnShuffledString()
     {
-        //  Arrange
+        // Arrange
         const string Input = "ABC";
 
         // Act
         var result = LetterHelper.ShuffleLetters(Input);
 
-        // ASSERT
+        // Assert
         Assert.Equal(Input.Length, result.Length);
         Assert.True(Input.All(c => result.Contains(c)));
     }
@@ -27,7 +27,7 @@ public class LetterHelperTests
         // Arrange
         const string Input = "AB*C";
 
-        //act
+        // Act
         var result = LetterHelper.ShuffleLetters(Input);
 
         // Assert
