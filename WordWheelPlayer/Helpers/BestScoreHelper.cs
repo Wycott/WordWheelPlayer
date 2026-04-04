@@ -1,6 +1,6 @@
-﻿using AiAnnotations;
+﻿using System.Text.Json;
+using AiAnnotations;
 using AiAnnotations.Types;
-using System.Text.Json;
 
 namespace WordWheelPlayer.Helpers;
 

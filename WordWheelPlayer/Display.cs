@@ -1,5 +1,5 @@
-using AiAnnotations;
 using System.Reflection;
+using AiAnnotations;
 using WordWheelPlayer.Helpers;
 
 namespace WordWheelPlayer;
@@ -94,6 +94,7 @@ public partial class GameEngine
 
             ConsoleOperations.WriteEmptyLine();
         }
+
         ConsoleOperations.ForegroundColour = currentForeground;
     }
 
@@ -125,7 +126,7 @@ public partial class GameEngine
         }
 
         var beforeAsterisk = gameLetters.Substring(asteriskIndex - 1, 1);
-        var afterAsterisk = gameLetters.Substring(0, asteriskIndex - 1) + gameLetters.Substring(asteriskIndex + 1);
+        var afterAsterisk = gameLetters[..(asteriskIndex - 1)] + gameLetters[(asteriskIndex + 1)..];
 
         return beforeAsterisk + afterAsterisk;
     }

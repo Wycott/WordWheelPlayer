@@ -20,6 +20,8 @@ public partial class GameEngine
 
     private DateTime WhenStarted { get; } = DateTime.Now;
 
+    private List<string> lettersToUse = [];
+
     private IGameConsole ConsoleOperations
     {
         get;
@@ -29,8 +31,6 @@ public partial class GameEngine
     {
         get;
     }
-
-    private List<string> lettersToUse = [];
 
     public GameEngine(IGameConsole consoleOperations)
     {
@@ -57,7 +57,7 @@ public partial class GameEngine
         while (!quitGame)
         {
             var word = ConsoleOperations.ReadInput();
-            
+
             ConsoleOperations.WriteEmptyLine();
 
             if (word != null)

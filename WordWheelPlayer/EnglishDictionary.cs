@@ -25,17 +25,18 @@ public class EnglishDictionary(int minWordLength, int maxWordLength)
         {
             var candidate = line.ToUpper();
 
-            if (candidate.Length <= MaxWordLength &&
-                candidate.Length >= MinWordLength &&
-                Regex.IsMatch(candidate, RegExPattern)
-               )
+            if (candidate.Length > MaxWordLength ||
+                candidate.Length < MinWordLength ||
+                !Regex.IsMatch(candidate, RegExPattern))
             {
-                englishDictionary.Add(candidate);
+                continue;
+            }
 
-                if (candidate.Length == MaxWordLength)
-                {
-                    candidateWords.Add(new LongestWordCandidate { LongestWord = candidate, SortBy = Guid.NewGuid().ToString() });
-                }
+            englishDictionary.Add(candidate);
+
+            if (candidate.Length == MaxWordLength)
+            {
+                candidateWords.Add(new LongestWordCandidate { LongestWord = candidate, SortBy = Guid.NewGuid().ToString() });
             }
         }
 
@@ -66,51 +67,17 @@ public class EnglishDictionary(int minWordLength, int maxWordLength)
         // Suspect (but have not proved) that this will always have a score of 1
         foreach (var letter in word)
         {
-            var valueFound = -1;
-
-            switch (letter)
+            var valueFound = letter switch
             {
-                case 'A':
-                case 'E':
-                case 'I':
-                case 'O':
-                case 'U':
-                case 'L':
-                case 'N':
-                case 'S':
-                case 'T':
-                case 'R':
-                    valueFound = 1;
-                    break;
-                case 'D':
-                case 'G':
-                    valueFound = 2;
-                    break;
-                case 'B':
-                case 'C':
-                case 'M':
-                case 'P':
-                    valueFound = 3;
-                    break;
-                case 'F':
-                case 'H':
-                case 'V':
-                case 'W':
-                case 'Y':
-                    valueFound = 4;
-                    break;
-                case 'K':
-                    valueFound = 5;
-                    break;
-                case 'J':
-                case 'X':
-                    valueFound = 8;
-                    break;
-                case 'Q':
-                case 'Z':
-                    valueFound = 10;
-                    break;
-            }
+                'A' or 'E' or 'I' or 'O' or 'U' or 'L' or 'N' or 'S' or 'T' or 'R' => 1,
+                'D' or 'G' => 2,
+                'B' or 'C' or 'M' or 'P' => 3,
+                'F' or 'H' or 'V' or 'W' or 'Y' => 4,
+                'K' => 5,
+                'J' or 'X' => 8,
+                'Q' or 'Z' => 10,
+                _ => -1
+            };
 
             if (valueFound >= maxVal)
             {

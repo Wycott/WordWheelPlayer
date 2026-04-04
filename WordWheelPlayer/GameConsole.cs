@@ -6,8 +6,6 @@ namespace WordWheelPlayer;
 [ExcludeFromCodeCoverage]
 public class GameConsole : IGameConsole
 {
-    private ConsoleColor foregroundColour;
-
     public GameConsole()
     {
         ForegroundColour = ForegroundColor;
@@ -15,11 +13,11 @@ public class GameConsole : IGameConsole
 
     public ConsoleColor ForegroundColour
     {
-        get => foregroundColour;
+        get;
 
         set
         {
-            foregroundColour = value;
+            field = value;
             ForegroundColor = value;
         }
     }
