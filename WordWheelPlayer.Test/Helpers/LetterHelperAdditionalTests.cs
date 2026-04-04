@@ -27,11 +27,13 @@ public class LetterHelperAdditionalTests
     [Fact]
     public void TryShuffleLetters_MultipleLetters_ContainsAllLetters()
     {
-        var input = "ABCDEFGHI";
-        var result = LetterHelper.TryShuffleLetters(input);
+        const string Input = "ABCDEFGHI";
 
-        Assert.Equal(input.Length, result.Length);
-        foreach (var c in input)
+        var result = LetterHelper.TryShuffleLetters(Input);
+
+        Assert.Equal(Input.Length, result.Length);
+
+        foreach (var c in Input)
         {
             Assert.Contains(c, result);
         }
