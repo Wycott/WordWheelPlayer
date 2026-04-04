@@ -12,7 +12,7 @@ public class DisplayTests
         var mockConsole = new Mock<IGameConsole>();
         mockConsole.Setup(c => c.ReadInput()).Returns(":QUIT");
 
-        var gameEngine = new GameEngine(mockConsole.Object);
+        _ = new GameEngine(mockConsole.Object);
 
         mockConsole.Verify(c => c.WriteOutput(It.IsAny<string>()), Times.AtLeastOnce);
     }
@@ -23,7 +23,7 @@ public class DisplayTests
         var mockConsole = new Mock<IGameConsole>();
         mockConsole.Setup(c => c.ReadInput()).Returns(":QUIT");
 
-        var gameEngine = new GameEngine(mockConsole.Object);
+        _ = new GameEngine(mockConsole.Object);
 
         mockConsole.Verify(c => c.WriteEmptyLine(), Times.AtLeastOnce);
     }

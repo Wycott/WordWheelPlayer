@@ -34,7 +34,7 @@ public class BestGameTests
         {
             BestDate = bestDate
         };
-        
+
         var gameStartTime = new DateTime(2025, 1, 1);
 
         // Act
