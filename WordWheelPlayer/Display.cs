@@ -84,7 +84,7 @@ public partial class GameEngine
 
         ConsoleOperations.ForegroundColour = ConsoleColor.White;
         {
-            const string Feature = "Add restart option";
+            const string Feature = "Fix looping hack";
 
             var exePath = Assembly.GetExecutingAssembly().Location;
             var buildDate = File.GetLastWriteTime(exePath);
