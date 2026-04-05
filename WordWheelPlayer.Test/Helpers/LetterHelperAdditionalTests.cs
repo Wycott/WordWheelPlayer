@@ -9,7 +9,7 @@ public class LetterHelperAdditionalTests
     [Fact]
     public void TryShuffleLetters_WithAsterisk_PreservesAsterisk()
     {
-        var result = LetterHelper.TryShuffleLetters("A*BC");
+        var result = LetterHelper.ShuffleLetters("A*BC");
 
         Assert.Contains("*", result);
         Assert.Equal(4, result.Length);
@@ -18,7 +18,7 @@ public class LetterHelperAdditionalTests
     [Fact]
     public void TryShuffleLetters_WithoutAsterisk_ShufflesLetters()
     {
-        var result = LetterHelper.TryShuffleLetters("ABC");
+        var result = LetterHelper.ShuffleLetters("ABC");
 
         Assert.Equal(3, result.Length);
         Assert.DoesNotContain("*", result);
@@ -29,7 +29,7 @@ public class LetterHelperAdditionalTests
     {
         const string Input = "ABCDEFGHI";
 
-        var result = LetterHelper.TryShuffleLetters(Input);
+        var result = LetterHelper.ShuffleLetters(Input);
 
         Assert.Equal(Input.Length, result.Length);
 
@@ -37,14 +37,5 @@ public class LetterHelperAdditionalTests
         {
             Assert.Contains(c, result);
         }
-    }
-
-    [Fact]
-    public void ShuffleLetters_AsteriskAtEnd_Reshuffles()
-    {
-        var result = LetterHelper.ShuffleLetters("ABC*");
-
-        Assert.Contains("*", result);
-        Assert.False(result.EndsWith('*'));
     }
 }

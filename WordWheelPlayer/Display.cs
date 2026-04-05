@@ -120,15 +120,17 @@ public partial class GameEngine
     {
         var asteriskIndex = gameLetters.IndexOf('*');
 
-        if (asteriskIndex <= 0 || asteriskIndex == gameLetters.Length - 1)
+        if (asteriskIndex == gameLetters.Length - 1)
         {
-            return gameLetters;
+            return gameLetters[8] + gameLetters[..8];
         }
 
         var beforeAsterisk = gameLetters.Substring(asteriskIndex - 1, 1);
         var afterAsterisk = gameLetters[..(asteriskIndex - 1)] + gameLetters[(asteriskIndex + 1)..];
 
-        return beforeAsterisk + afterAsterisk;
+        var retVal = beforeAsterisk + afterAsterisk;
+
+        return retVal;
     }
 
     private void DisplayMessageLines(List<string> textLines)
