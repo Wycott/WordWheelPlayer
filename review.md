@@ -124,7 +124,7 @@ The solution is well-structured with good separation of concerns (partial classe
 **Priority:** Medium  
 **Description:** The `IGameConsole` abstraction exists specifically to enable testing, but there is no test project in the solution. The scoring logic, dictionary validation, letter helpers, and game rules are all testable in isolation.  
 **Task:** Add an xUnit/NUnit/MSTest project with tests covering at minimum: `ScoreHelper`, `LetterHelper`, `DisplayHelper`, `EnglishDictionary.WordIsInDictionary`, and the word validation logic in `GameEngine`.  
-- [ ] To do
+- [x] Completed — test project already exists (`WordWheelPlayer.Test`, 73 passing tests). Issue was raised in error.
 
 ---
 
@@ -143,4 +143,70 @@ The solution is well-structured with good separation of concerns (partial classe
 | 9 | Public mutable field | Low | ✅ Done |
 | 10 | Side-effecting "check" method | Low | ✅ Done |
 | 11 | GUID-based randomisation | Low | ✅ Done |
-| 12 | No unit test project | Medium | ⬜ To do |
+| 12 | No unit test project | Medium | ✅ Done (already existed) |
+
+---
+
+## Final Review (Post-Fix)
+
+After addressing all 12 original issues, a final pass identified the following remaining items:
+
+### 13. `InvalidLetterFound` checks against `GameLetters` which contains the `*` marker
+
+**File:** `GameEngine.cs` — `InvalidLetterFound()` / `Start()`  
+**Priority:** Low  
+**Description:** The `GameLetters` string contains the `*` character as a key-letter marker. `InvalidLetterFound` checks whether each character in the guessed word exists in `GameLetters`. Since `*` is never typed by the player, this doesn't cause a false positive — but it means the validation is checking against a string that includes a non-letter character. If a player somehow entered `*`, it would pass this check. Functionally harmless but semantically imprecise.  
+**Task:** Strip `*` from `GameLetters` before passing to `InvalidLetterFound`, or use the `gameLetters` list (which has clean letter values) for validation instead.  
+- [ ] To do
+
+---
+
+### 14. `ScoreHelper.CalculateWordScore` can throw `IndexOutOfRangeException` for words longer than 9 letters
+
+**File:** `Helpers/ScoreHelper.cs`  
+**Priority:** Low  
+**Description:** The `FibonacciNumbers` list has 7 entries (indices 0–6, covering word lengths 3–9). If a word longer than 9 characters were passed in, `word.Length - 3` would exceed the list bounds. Currently the game caps words at 9 letters so this can't happen in practice, but the method is public and has no guard.  
+**Task:** Add a bounds check: if `index >= FibonacciNumbers.Count` return the last value or throw a meaningful exception.  
+- [ ] To do
+
+---
+
+### 15. `DisplayVersion` will show a null/empty version when running via `dotnet run`
+
+**File:** `Display.cs` — `DisplayVersion()`  
+**Priority:** Low  
+**Description:** `Assembly.GetExecutingAssembly().GetName().Version` returns `1.0.0.0` by default unless a `<Version>` or `<AssemblyVersion>` is set in the `.csproj`. Additionally, `Assembly.GetExecutingAssembly().Location` returns an empty string for single-file published apps, which would make `File.GetLastWriteTime` return `01/01/1601`. Not a crash, but confusing output.  
+**Task:** Set a `<Version>` in the `.csproj` and add a fallback for empty `Location`.  
+- [ ] To do
+
+---
+
+### 16. `wordsFoundSoFar.Sort()` runs on every loop iteration including when no word was added
+
+**File:** `GameEngine.cs` — `Start()`  
+**Priority:** Low  
+**Description:** After every input (including commands that `continue` past the sort), the code at the bottom of the loop sorts the word list, clears the screen, and re-renders. For commands that already `continue`, this is fine — they skip it. But for invalid words (e.g. "not in dictionary"), the screen is still cleared and re-rendered even though nothing changed. This causes the error message to flash briefly before being cleared.  
+**Task:** Move the clear/re-render block so it only executes when a word is successfully added, or `continue` after displaying the "not in dictionary" message.  
+- [ ] To do
+
+---
+
+### 17. `EnglishDictionary.LongestWord` and `GameLetters` are publicly settable
+
+**File:** `EnglishDictionary.cs`  
+**Priority:** Low  
+**Description:** Both `LongestWord` and `GameLetters` have public setters but should only be set internally by `InitDictionary()`. External code could overwrite them and break game state.  
+**Task:** Change to `public string? LongestWord { get; private set; }` and `public List<string> GameLetters { get; private set; } = []`.  
+- [ ] To do
+
+---
+
+### Summary Table (Final Review)
+
+| # | Issue | Priority | Status |
+|---|-------|----------|--------|
+| 13 | `*` marker in letter validation string | Low | ⬜ To do |
+| 14 | No bounds check in ScoreHelper | Low | ⬜ To do |
+| 15 | Version display may show defaults | Low | ⬜ To do |
+| 16 | Screen clears after failed word attempts | Low | ⬜ To do |
+| 17 | Publicly settable properties on EnglishDictionary | Low | ⬜ To do |
