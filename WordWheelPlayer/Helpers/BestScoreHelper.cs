@@ -9,7 +9,7 @@ public static class BestScoreHelper
 {
     private const string FilePath = "BestGame.json";
 
-    public static BestGame CheckForBestScore(int score)
+    public static BestGame UpdateBestScoreIfHigher(int score)
     {
         var bestGameSoFar = LoadGame();
 

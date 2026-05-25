@@ -1,10 +1,11 @@
+using System.Text;
+
 namespace WordWheelPlayer.Helpers;
 
 public static class LetterHelper
 {
     public static string ShuffleLetters(string letters)
     {
-        var retVal = string.Empty;
         var shuffleLetters = new List<GameLetter>();
 
         foreach (var letter in letters)
@@ -20,16 +21,18 @@ public static class LetterHelper
             }
         }
 
-        foreach (var shuffleLetter in shuffleLetters.OrderBy(_ => Guid.NewGuid().ToString()))
+        var sb = new StringBuilder();
+
+        foreach (var shuffleLetter in shuffleLetters.OrderBy(_ => Random.Shared.Next()))
         {
-            retVal += shuffleLetter.Letter;
+            sb.Append(shuffleLetter.Letter);
 
             if (shuffleLetter.MustInclude)
             {
-                retVal += '*';
+                sb.Append('*');
             }
         }
 
-        return retVal;
+        return sb.ToString();
     }
 }

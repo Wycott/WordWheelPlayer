@@ -64,7 +64,7 @@ The solution is well-structured with good separation of concerns (partial classe
 **Priority:** Low  
 **Description:** `GameLetters` is a non-nullable `string` property initialised to `string.Empty`. The `if (GameLetters != null)` checks are always true. This is dead code that adds confusion.  
 **Task:** Remove the null checks. The property type already guarantees non-null.  
-- [ ] To do
+- [x] Completed — removed both redundant null checks
 
 ---
 
@@ -74,7 +74,7 @@ The solution is well-structured with good separation of concerns (partial classe
 **Priority:** Low  
 **Description:** Both methods build strings character-by-character using `+=` in a loop. For a 9-character string this is negligible, but it's a poor pattern that a `StringBuilder` or `string.Join` would express more clearly.  
 **Task:** Replace with `StringBuilder` or LINQ `string.Concat`/`string.Join` for clarity.  
-- [ ] To do
+- [x] Completed — replaced with `StringBuilder` in both `LetterHelper` and `GameEngine.Init()`
 
 ---
 
@@ -84,7 +84,7 @@ The solution is well-structured with good separation of concerns (partial classe
 **Priority:** Low  
 **Description:** `Letter` is declared as `string?` but is never set to null in practice. Consumers (e.g. `gameLetters.FirstOrDefault(x => x.Letter == ...)`) rely on it being non-null. This creates unnecessary nullable warnings or suppression.  
 **Task:** Change to `public required string Letter { get; set; }` (or initialise with `= string.Empty`) to match actual usage.  
-- [ ] To do
+- [x] Completed — changed to `public required string Letter { get; set; }`
 
 ---
 
@@ -94,7 +94,7 @@ The solution is well-structured with good separation of concerns (partial classe
 **Priority:** Low  
 **Description:** `public List<string> GameLetters = []` is a mutable public field. This breaks encapsulation — callers can replace or mutate the list freely. The rest of the codebase uses properties.  
 **Task:** Change to a property: `public List<string> GameLetters { get; set; } = []` or better, expose as `IReadOnlyList<string>`.  
-- [ ] To do
+- [x] Completed — changed to property `public List<string> GameLetters { get; set; } = []`
 
 ---
 
@@ -104,7 +104,7 @@ The solution is well-structured with good separation of concerns (partial classe
 **Priority:** Low  
 **Description:** The method name suggests a read operation ("check"), but it also writes to disk when the score is higher. This is called from `DisplayBestTotals`, meaning simply viewing the score can trigger a file write. The coupling between display and persistence is surprising.  
 **Task:** Rename to `UpdateBestScoreIfHigher` or separate the check from the save. Consider calling the save explicitly from the game loop rather than from a display method.  
-- [ ] To do
+- [x] Completed — renamed to `UpdateBestScoreIfHigher`
 
 ---
 
@@ -114,7 +114,7 @@ The solution is well-structured with good separation of concerns (partial classe
 **Priority:** Low  
 **Description:** Using `Guid.NewGuid().ToString()` as a sort key works but is unconventional and allocates strings unnecessarily. `Random.Shared.Next()` (or `Random.Shared.GetItems` in .NET 8+) is the idiomatic approach and avoids string allocations.  
 **Task:** Replace GUID-based ordering with `Random.Shared` for shuffling and candidate selection.  
-- [ ] To do
+- [x] Completed — replaced with `Random.Shared.Next()` in both files
 
 ---
 
@@ -137,10 +137,10 @@ The solution is well-structured with good separation of concerns (partial classe
 | 3 | Regex recompiled per line | Medium | ✅ Done |
 | 4 | Hardcoded index in FrontLoadCentreLetter | Medium | ✅ Done |
 | 5 | Stale feature string in version display | Medium | ✅ Done |
-| 6 | Redundant null checks on GameLetters | Low | ⬜ To do |
-| 7 | String concatenation in loops | Low | ⬜ To do |
-| 8 | Nullable Letter property never null | Low | ⬜ To do |
-| 9 | Public mutable field | Low | ⬜ To do |
-| 10 | Side-effecting "check" method | Low | ⬜ To do |
-| 11 | GUID-based randomisation | Low | ⬜ To do |
+| 6 | Redundant null checks on GameLetters | Low | ✅ Done |
+| 7 | String concatenation in loops | Low | ✅ Done |
+| 8 | Nullable Letter property never null | Low | ✅ Done |
+| 9 | Public mutable field | Low | ✅ Done |
+| 10 | Side-effecting "check" method | Low | ✅ Done |
+| 11 | GUID-based randomisation | Low | ✅ Done |
 | 12 | No unit test project | Medium | ⬜ To do |

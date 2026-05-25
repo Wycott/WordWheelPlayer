@@ -7,18 +7,17 @@ public class LongestWordCandidateTest
     {
         // Arrange
         const string ExpectedLongestWord = "antidisestablishmentarianism";
-
-        var expectedSortBy = Guid.Empty.ToString();
+        const int ExpectedSortBy = 42;
 
         // Act
         var lwc = new LongestWordCandidate
         {
-            SortBy = expectedSortBy,
+            SortBy = ExpectedSortBy,
             LongestWord = ExpectedLongestWord
         };
 
         // Assert
         Assert.Equal(ExpectedLongestWord, lwc.LongestWord);
-        Assert.Equal(expectedSortBy, lwc.SortBy);
+        Assert.Equal(ExpectedSortBy, lwc.SortBy);
     }
 }

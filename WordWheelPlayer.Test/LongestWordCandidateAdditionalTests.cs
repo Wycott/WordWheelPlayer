@@ -6,25 +6,25 @@ namespace WordWheelPlayer.Test;
 public class LongestWordCandidateAdditionalTests
 {
     [Fact]
-    public void LongestWordCandidate_DefaultValues_AreNull()
+    public void LongestWordCandidate_DefaultValues()
     {
         var candidate = new LongestWordCandidate();
 
         Assert.Null(candidate.LongestWord);
-        Assert.Null(candidate.SortBy);
+        Assert.Equal(0, candidate.SortBy);
     }
 
     [Fact]
-    public void LongestWordCandidate_EmptyStrings_CanBeSet()
+    public void LongestWordCandidate_Values_CanBeSet()
     {
         var candidate = new LongestWordCandidate
         {
-            LongestWord = "",
-            SortBy = ""
+            LongestWord = "EDUCATION",
+            SortBy = 99
         };
 
-        Assert.Equal("", candidate.LongestWord);
-        Assert.Equal("", candidate.SortBy);
+        Assert.Equal("EDUCATION", candidate.LongestWord);
+        Assert.Equal(99, candidate.SortBy);
     }
 
     [Fact]

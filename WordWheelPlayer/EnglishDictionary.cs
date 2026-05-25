@@ -5,7 +5,7 @@ namespace WordWheelPlayer;
 public partial class EnglishDictionary(int minWordLength, int maxWordLength)
 {
     public string? LongestWord { get; set; }
-    public List<string> GameLetters = [];
+    public List<string> GameLetters { get; set; } = [];
 
     private readonly List<string> englishDictionary = [];
     private readonly List<LongestWordCandidate> candidateWords = [];
@@ -38,7 +38,7 @@ public partial class EnglishDictionary(int minWordLength, int maxWordLength)
 
             if (candidate.Length == MaxWordLength)
             {
-                candidateWords.Add(new LongestWordCandidate { LongestWord = candidate, SortBy = Guid.NewGuid().ToString() });
+                candidateWords.Add(new LongestWordCandidate { LongestWord = candidate, SortBy = Random.Shared.Next() });
             }
         }
 

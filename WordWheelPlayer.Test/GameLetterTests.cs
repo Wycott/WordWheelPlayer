@@ -42,12 +42,12 @@ public class GameLetterTests
     }
 
     [Fact]
-    public void GameLetter_ShouldHandleNullLetter()
+    public void GameLetter_ShouldRequireLetterProperty()
     {
-        // Arrange
-        var letter = new GameLetter { Letter = null };
+        // Arrange - Letter is required, so we must provide it
+        var letter = new GameLetter { Letter = "X" };
 
         // Act & Assert
-        Assert.Null(letter.Letter);
+        Assert.Equal("X", letter.Letter);
     }
 }

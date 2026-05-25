@@ -8,9 +8,9 @@ public class GameLetterAdditionalTests
     [Fact]
     public void GameLetter_DefaultValues_AreCorrect()
     {
-        var letter = new GameLetter();
+        var letter = new GameLetter { Letter = "A" };
 
-        Assert.Null(letter.Letter);
+        Assert.Equal("A", letter.Letter);
         Assert.False(letter.Used);
         Assert.False(letter.MustInclude);
     }
@@ -41,7 +41,7 @@ public class GameLetterAdditionalTests
     [Fact]
     public void GameLetter_CanToggleUsed()
     {
-        var letter = new GameLetter { Used = false };
+        var letter = new GameLetter { Letter = "A", Used = false };
         letter.Used = true;
 
         Assert.True(letter.Used);

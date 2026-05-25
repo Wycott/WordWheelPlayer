@@ -99,10 +99,7 @@ public partial class GameEngine
                             continue;
                         case "M":
                         case "MIX":
-                            if (GameLetters != null)
-                            {
-                                GameLetters = LetterHelper.ShuffleLetters(GameLetters);
-                            }
+                            GameLetters = LetterHelper.ShuffleLetters(GameLetters);
                             DisplayLetters();
                             continue;
                         case "PEEK": // Easter egg
@@ -139,7 +136,7 @@ public partial class GameEngine
                     continue;
                 }
 
-                if (GameLetters != null && InvalidLetterFound(word, GameLetters, out var badGuy))
+                if (InvalidLetterFound(word, GameLetters, out var badGuy))
                 {
                     DisplayMessage($"{badGuy} is not a valid letter");
                     continue;
@@ -227,7 +224,7 @@ public partial class GameEngine
 
     private void Init()
     {
-        GameLetters = string.Empty;
+        var sb = new System.Text.StringBuilder();
 
         foreach (var letter in lettersToUse)
         {
@@ -237,20 +234,20 @@ public partial class GameEngine
                 Used = false
             };
 
-            GameLetters += letter;
+            sb.Append(letter);
 
             if (gameLetters.Count == 0)
             {
                 gameLetter.MustInclude = true;
                 keyLetter = letter;
 
-                GameLetters += "*";
+                sb.Append('*');
             }
 
             gameLetters.Add(gameLetter);
         }
 
-        GameLetters = LetterHelper.ShuffleLetters(GameLetters);
+        GameLetters = LetterHelper.ShuffleLetters(sb.ToString());
 
         DisplayInitialLetters();
     }
