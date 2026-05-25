@@ -174,10 +174,14 @@ public partial class GameEngine
                         continue;
                     }
 
-                    if (AvailableWords.WordIsInDictionary(word) && word.Length >= MinLength)
+                    if (AvailableWords.WordIsInDictionary(word))
                     {
                         Score += ScoreHelper.CalculateWordScore(word);
                         wordsFoundSoFar.Add(word);
+                    }
+                    else
+                    {
+                        DisplayMessage("Word not found in dictionary");
                     }
                 }
 

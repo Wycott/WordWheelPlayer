@@ -15,6 +15,7 @@ public class EnglishDictionary(int minWordLength, int maxWordLength)
 
     public void InitDictionary()
     {
+        englishDictionary.Clear();
         candidateWords.Clear();
 
         const string RegExPattern = "^[a-zA-Z]+$";
