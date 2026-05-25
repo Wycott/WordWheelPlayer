@@ -34,7 +34,7 @@ The solution is well-structured with good separation of concerns (partial classe
 **Priority:** Medium  
 **Description:** `Regex.IsMatch(candidate, RegExPattern)` is called for every word in the file. The regex is recompiled each time. For a large dictionary file this is a noticeable startup cost.  
 **Task:** Use a compiled `Regex` instance (e.g. `private static readonly Regex AlphaOnly = new("^[a-zA-Z]+$", RegexOptions.Compiled)`) or a .NET 7+ source generator `[GeneratedRegex]`.  
-- [ ] To do
+- [x] Completed — replaced with `[GeneratedRegex]` source generator
 
 ---
 
@@ -44,7 +44,7 @@ The solution is well-structured with good separation of concerns (partial classe
 **Priority:** Medium  
 **Description:** The method uses a hardcoded index `gameLetters[8]` when the asterisk is at the end. If the string is shorter than 9 characters (e.g. due to a future difficulty mode or a bug), this will throw an `IndexOutOfRangeException`. Additionally, if the asterisk is at position 0, `asteriskIndex - 1` becomes -1.  
 **Task:** Add guard clauses or derive indices from the string length rather than hardcoding. Consider validating input length.  
-- [ ] To do
+- [x] Completed — replaced hardcoded index with safe asterisk-relative logic and guard clause
 
 ---
 
@@ -54,7 +54,7 @@ The solution is well-structured with good separation of concerns (partial classe
 **Priority:** Medium  
 **Description:** The version display contains `const string Feature = "Fix looping hack"` — a stale developer note baked into the output. This will be shown to players and is meaningless to them.  
 **Task:** Remove the hardcoded feature string or replace it with assembly version metadata (e.g. `Assembly.GetExecutingAssembly().GetName().Version`).  
-- [ ] To do
+- [x] Completed — replaced with assembly version display
 
 ---
 
@@ -134,9 +134,9 @@ The solution is well-structured with good separation of concerns (partial classe
 |---|-------|----------|--------|
 | 1 | Dictionary not cleared on restart | High | ✅ Done |
 | 2 | No feedback for invalid dictionary word | High | ✅ Done |
-| 3 | Regex recompiled per line | Medium | ⬜ To do |
-| 4 | Hardcoded index in FrontLoadCentreLetter | Medium | ⬜ To do |
-| 5 | Stale feature string in version display | Medium | ⬜ To do |
+| 3 | Regex recompiled per line | Medium | ✅ Done |
+| 4 | Hardcoded index in FrontLoadCentreLetter | Medium | ✅ Done |
+| 5 | Stale feature string in version display | Medium | ✅ Done |
 | 6 | Redundant null checks on GameLetters | Low | ⬜ To do |
 | 7 | String concatenation in loops | Low | ⬜ To do |
 | 8 | Nullable Letter property never null | Low | ⬜ To do |

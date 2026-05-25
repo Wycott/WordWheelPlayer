@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace WordWheelPlayer;
 
-public class EnglishDictionary(int minWordLength, int maxWordLength)
+public partial class EnglishDictionary(int minWordLength, int maxWordLength)
 {
     public string? LongestWord { get; set; }
     public List<string> GameLetters = [];
@@ -13,12 +13,13 @@ public class EnglishDictionary(int minWordLength, int maxWordLength)
     public int MinWordLength { get; } = minWordLength;
     public int MaxWordLength { get; } = maxWordLength;
 
+    [GeneratedRegex("^[a-zA-Z]+$")]
+    private static partial Regex AlphaOnly();
+
     public void InitDictionary()
     {
         englishDictionary.Clear();
         candidateWords.Clear();
-
-        const string RegExPattern = "^[a-zA-Z]+$";
 
         using var sr = new StreamReader("words.txt");
 
@@ -28,7 +29,7 @@ public class EnglishDictionary(int minWordLength, int maxWordLength)
 
             if (candidate.Length > MaxWordLength ||
                 candidate.Length < MinWordLength ||
-                !Regex.IsMatch(candidate, RegExPattern))
+                !AlphaOnly().IsMatch(candidate))
             {
                 continue;
             }

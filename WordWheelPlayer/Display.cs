@@ -84,12 +84,11 @@ public partial class GameEngine
 
         ConsoleOperations.ForegroundColour = ConsoleColor.White;
         {
-            const string Feature = "Fix looping hack";
-
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
             var exePath = Assembly.GetExecutingAssembly().Location;
             var buildDate = File.GetLastWriteTime(exePath);
 
-            ConsoleOperations.WriteOutput($"Feature   : {Feature}");
+            ConsoleOperations.WriteOutput($"Version   : {version}");
             ConsoleOperations.WriteOutput($"Build date: {buildDate}");
 
             ConsoleOperations.WriteEmptyLine();
@@ -115,22 +114,21 @@ public partial class GameEngine
         ];
     }
 
-    [AiGenerated]
     private static string FrontLoadCentreLetter(string gameLetters)
     {
         var asteriskIndex = gameLetters.IndexOf('*');
 
-        if (asteriskIndex == gameLetters.Length - 1)
+        if (asteriskIndex < 1 || asteriskIndex > gameLetters.Length - 1)
         {
-            return gameLetters[8] + gameLetters[..8];
+            // No asterisk found or at invalid position — return letters without marker
+            return gameLetters.Replace("*", "");
         }
 
-        var beforeAsterisk = gameLetters.Substring(asteriskIndex - 1, 1);
-        var afterAsterisk = gameLetters[..(asteriskIndex - 1)] + gameLetters[(asteriskIndex + 1)..];
+        // The character before the asterisk is the centre letter
+        var centreLetter = gameLetters[asteriskIndex - 1];
+        var remaining = gameLetters[..(asteriskIndex - 1)] + gameLetters[(asteriskIndex + 1)..];
 
-        var retVal = beforeAsterisk + afterAsterisk;
-
-        return retVal;
+        return centreLetter + remaining;
     }
 
     private void DisplayMessageLines(List<string> textLines)
