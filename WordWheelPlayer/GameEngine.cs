@@ -32,9 +32,15 @@ public partial class GameEngine
         get;
     }
 
+    private GameConfig Config
+    {
+        get;
+    }
+
     public GameEngine(IGameConsole consoleOperations)
     {
         ConsoleOperations = consoleOperations;
+        Config = GameConfig.Load();
         AvailableWords = new EnglishDictionary(MinLength, MaxLength);
         RunPreGame();
     }

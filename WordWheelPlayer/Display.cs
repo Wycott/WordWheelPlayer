@@ -21,17 +21,27 @@ public partial class GameEngine
 
     private int DisplayWordsFound()
     {
-        var wordCount = 0;
-
-        foreach (var foundWord in wordsFoundSoFar)
-        {
-            ConsoleOperations.WriteOutput(foundWord);
-            wordCount++;
-        }
+        var wordCount = wordsFoundSoFar.Count;
 
         if (wordCount == 0)
         {
             DisplayMessage("No words found yet!");
+            return 0;
+        }
+
+        var columns = Math.Max(1, Config.WordDisplayColumns);
+        var columnWidth = DisplayHelper.GameTextWidth / columns;
+
+        for (var i = 0; i < wordCount; i += columns)
+        {
+            var line = string.Empty;
+
+            for (var col = 0; col < columns && i + col < wordCount; col++)
+            {
+                line += wordsFoundSoFar[i + col].PadRight(columnWidth);
+            }
+
+            ConsoleOperations.WriteOutput(line.TrimEnd());
         }
 
         return wordCount;
