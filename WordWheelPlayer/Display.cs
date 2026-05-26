@@ -63,7 +63,8 @@ public partial class GameEngine
 
     private void DisplayBestTotals(int score)
     {
-        var bestGame = BestScoreHelper.UpdateBestScoreIfHigher(score);
+        var letters = GameLetters.Replace("*", "");
+        var bestGame = BestScoreHelper.UpdateBestScoreIfHigher(score, wordsFoundSoFar.Count, letters, keyLetter);
 
         ConsoleOperations.WriteOutput($"Best Score       : {bestGame.BestScore}");
         ConsoleOperations.WriteOutput($"Best Score Date  : {bestGame.WhenAchieved(WhenStarted)}");

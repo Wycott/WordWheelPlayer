@@ -9,7 +9,7 @@ public static class BestScoreHelper
 {
     private const string FilePath = "BestGame.json";
 
-    public static BestGame UpdateBestScoreIfHigher(int score)
+    public static BestGame UpdateBestScoreIfHigher(int score, int wordsFound = 0, string letters = "", string centralLetter = "")
     {
         var bestGameSoFar = LoadGame();
 
@@ -20,6 +20,9 @@ public static class BestScoreHelper
 
         bestGameSoFar.BestScore = score;
         bestGameSoFar.BestDate = DateTime.Now;
+        bestGameSoFar.WordsFound = wordsFound;
+        bestGameSoFar.Letters = letters;
+        bestGameSoFar.CentralLetter = centralLetter;
 
         SaveGame(bestGameSoFar);
 
