@@ -174,7 +174,7 @@ public partial class GameEngine
             "",
             $"Find as many words of {MinLength} letters or more using the central letter",
             "",
-            "Words may not end with the letter S",
+            "Words may not end with the letter S. SS ending *is* permitted e.g. fuss",
             "",
             $"There will be at least one word that uses all {MaxLength} letters",
             "",
