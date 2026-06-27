@@ -47,6 +47,43 @@ public partial class GameEngine
         return wordCount;
     }
 
+    private void DisplayTotalsBreakdown()
+    {
+        if (wordsFoundSoFar.Count == 0)
+        {
+            DisplayMessage("No words found yet!");
+            return;
+        }
+
+        var grouped = wordsFoundSoFar
+            .GroupBy(w => w.Length)
+            .OrderByDescending(g => g.Key);
+
+        var totalScore = 0;
+
+        ConsoleOperations.WriteEmptyLine();
+
+        foreach (var group in grouped)
+        {
+            var words = group.OrderBy(w => w).ToList();
+            var subtotal = words.Sum(ScoreHelper.CalculateWordScore);
+            totalScore += subtotal;
+
+            ConsoleOperations.WriteOutput($"{group.Key}-letter words ({words.Count}):");
+
+            foreach (var word in words)
+            {
+                ConsoleOperations.WriteOutput($"  {word}");
+            }
+
+            ConsoleOperations.WriteOutput($"  Subtotal: {subtotal}");
+            ConsoleOperations.WriteEmptyLine();
+        }
+
+        ConsoleOperations.WriteOutput($"Total Score: {totalScore}");
+        ConsoleOperations.WriteEmptyLine();
+    }
+
     private void DisplayBestAndCurrentScore(int wordCount, int score)
     {
         DisplayTotals(wordCount, score);
@@ -182,6 +219,7 @@ public partial class GameEngine
             "",
             "\t:LETTERS - to display the letters",
             "\t:WORDS   - to display the words found so far",
+            "\t:TOTALS  - show words grouped by length with score breakdown",
             "\t:MIX     - mix up the letters",
             "\t:SCORE   - show the current (and best) score",
             "\t:RESTART - restart the game with new letters",

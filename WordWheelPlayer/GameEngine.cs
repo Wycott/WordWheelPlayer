@@ -99,6 +99,10 @@ public partial class GameEngine
                         case "SCORE":
                             DisplayBestAndCurrentScore(wordsFoundSoFar.Count, Score);
                             continue;
+                        case "T":
+                        case "TOTALS":
+                            DisplayTotalsBreakdown();
+                            continue;
                         case "V":
                         case "VERSION":
                             DisplayVersion();
