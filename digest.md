@@ -33,10 +33,20 @@ WordWheelPlayer is a .NET 10 console application that simulates the word wheel p
 
 | Metric | Value |
 |--------|-------|
-| Total commits | 167 |
+| Total commits | 168 |
 | First commit | Thursday, 02 February 2023 |
-| Last commit | Friday, 03 July 2026 |
-| Days | 1247 |
-| Weeks | 178 |
+| Last commit | Friday, 10 July 2026 |
+| Days | 1254 |
+| Weeks | 179 |
 | Months | 41 |
 | Years | 3 |
+
+## Commits by Year
+
+```mermaid
+pie title Commits by Year
+    "2023" : 32
+    "2024" : 8
+    "2025" : 85
+    "2026" : 43
+```
