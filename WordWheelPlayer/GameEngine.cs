@@ -66,133 +66,137 @@ public partial class GameEngine
 
             ConsoleOperations.WriteEmptyLine();
 
-            if (word != null)
+            if (word == null)
             {
-                word = word.ToUpper();
+                // End of input (e.g. Ctrl+Z / Ctrl+D or a closed pipe)
+                quitGame = true;
+                continue;
+            }
 
-                if (word.Length > 1 && word[..1] == ":")
+            word = word.ToUpper();
+
+            if (word.Length > 1 && word[..1] == ":")
+            {
+                switch (word[1..])
                 {
-                    switch (word[1..])
-                    {
-                        case "EGG":
-                        case "EASTEREGG":
-                            DisplayTease();
-                            continue;
-                        case "W":
-                        case "WORDS":
-                            DisplayWordsFound();
-                            continue;
-                        case "L":
-                        case "LETTERS":
-                            DisplayLetters();
-                            continue;
-                        case "H":
-                        case "HELP":
-                        case "COMMANDS":
-                            DisplayInstructions();
-                            continue;
-                        case "R":
-                        case "RESTART":
-                            RunPreGame();
-                            continue;
-                        case "S":
-                        case "SCORE":
-                            DisplayBestAndCurrentScore(wordsFoundSoFar.Count, Score);
-                            continue;
-                        case "T":
-                        case "TOTALS":
-                            DisplayTotalsBreakdown();
-                            continue;
-                        case "V":
-                        case "VERSION":
-                            DisplayVersion();
-                            continue;
-                        case "M":
-                        case "MIX":
-                            GameLetters = LetterHelper.ShuffleLetters(GameLetters);
-                            DisplayLetters();
-                            continue;
-                        case "PEEK": // Easter egg
-                            PeekWord();
-                            continue;
-                        case "X":
-                        case "QUIT":
-                        case "EXIT":
-                            quitGame = true;
-                            continue;
-                    }
-                }
-
-                if (word.Length == 0)
-                {
-                    continue;
-                }
-
-                if (word.EndsWith('S') && !word.EndsWith("SS"))
-                {
-                    DisplayMessage("Words may not end in S (-SS is allowed)");
-                    continue;
-                }
-
-                if (word[..1] == ":")
-                {
-                    DisplayMessage("Not a valid command");
-                    continue;
-                }
-
-                if (wordsFoundSoFar.Contains(word))
-                {
-                    DisplayMessage("That word was already found");
-                    continue;
-                }
-
-                if (InvalidLetterFound(word, GameLetters, out var badGuy))
-                {
-                    DisplayMessage($"{badGuy} is not a valid letter");
-                    continue;
-                }
-
-                if (!word.Contains(keyLetter))
-                {
-                    DisplayMessage($"Word must contain the letter {keyLetter}");
-                    continue;
-                }
-
-                var letterCount = 0;
-
-                foreach (var guessLetter in word)
-                {
-                    var gl = gameLetters.FirstOrDefault(x => x.Letter == guessLetter.ToString() && x.Used == false);
-
-                    if (gl == null)
-                    {
+                    case "EGG":
+                    case "EASTEREGG":
+                        DisplayTease();
                         continue;
-                    }
-
-                    gl.Used = true;
-                    letterCount++;
-                }
-
-                if (letterCount == word.Length)
-                {
-                    if (word.Length < MinLength)
-                    {
-                        DisplayMessage($"Words must be at least {MinLength} letters long!");
+                    case "W":
+                    case "WORDS":
+                        DisplayWordsFound();
                         continue;
-                    }
+                    case "L":
+                    case "LETTERS":
+                        DisplayLetters();
+                        continue;
+                    case "H":
+                    case "HELP":
+                    case "COMMANDS":
+                        DisplayInstructions();
+                        continue;
+                    case "R":
+                    case "RESTART":
+                        RunPreGame();
+                        continue;
+                    case "S":
+                    case "SCORE":
+                        DisplayBestAndCurrentScore(wordsFoundSoFar.Count, Score);
+                        continue;
+                    case "T":
+                    case "TOTALS":
+                        DisplayTotalsBreakdown();
+                        continue;
+                    case "V":
+                    case "VERSION":
+                        DisplayVersion();
+                        continue;
+                    case "M":
+                    case "MIX":
+                        GameLetters = LetterHelper.ShuffleLetters(GameLetters);
+                        DisplayLetters();
+                        continue;
+                    case "PEEK": // Easter egg
+                        PeekWord();
+                        continue;
+                    case "X":
+                    case "QUIT":
+                    case "EXIT":
+                        quitGame = true;
+                        continue;
+                }
+            }
 
-                    if (AvailableWords.WordIsInDictionary(word))
-                    {
-                        Score += ScoreHelper.CalculateWordScore(word);
-                        wordsFoundSoFar.Add(word);
-                    }
-                    else
-                    {
-                        DisplayMessage("Word not found in dictionary");
-                    }
+            if (word.Length == 0)
+            {
+                continue;
+            }
+
+            if (word.EndsWith('S') && !word.EndsWith("SS"))
+            {
+                DisplayMessage("Words may not end in S (-SS is allowed)");
+                continue;
+            }
+
+            if (word[..1] == ":")
+            {
+                DisplayMessage("Not a valid command");
+                continue;
+            }
+
+            if (wordsFoundSoFar.Contains(word))
+            {
+                DisplayMessage("That word was already found");
+                continue;
+            }
+
+            if (InvalidLetterFound(word, GameLetters, out var badGuy))
+            {
+                DisplayMessage($"{badGuy} is not a valid letter");
+                continue;
+            }
+
+            if (!word.Contains(keyLetter))
+            {
+                DisplayMessage($"Word must contain the letter {keyLetter}");
+                continue;
+            }
+
+            var letterCount = 0;
+
+            foreach (var guessLetter in word)
+            {
+                var gl = gameLetters.FirstOrDefault(x => x.Letter == guessLetter.ToString() && x.Used == false);
+
+                if (gl == null)
+                {
+                    continue;
                 }
 
-                ResetLetters();
+                gl.Used = true;
+                letterCount++;
+            }
+
+            // Reset before any early exit so a rejected guess can't leave letters marked as used
+            ResetLetters();
+
+            if (letterCount == word.Length)
+            {
+                if (word.Length < MinLength)
+                {
+                    DisplayMessage($"Words must be at least {MinLength} letters long!");
+                    continue;
+                }
+
+                if (!AvailableWords.WordIsInDictionary(word))
+                {
+                    DisplayMessage("Word not found in dictionary");
+                    continue;
+                }
+
+                Score += ScoreHelper.CalculateWordScore(word);
+                wordsFoundSoFar.Add(word);
             }
 
             wordsFoundSoFar.Sort();

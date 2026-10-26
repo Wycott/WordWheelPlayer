@@ -46,7 +46,7 @@ public class GameEngineAdditionalTests
     }
 
     [Fact]
-    public void Start_NullInput_HandlesGracefully()
+    public void Start_NullInput_EndsGame()
     {
         var mockConsole = new Mock<IGameConsole>();
         mockConsole.SetupSequence(c => c.ReadInput())
@@ -57,7 +57,7 @@ public class GameEngineAdditionalTests
 
         gameEngine.Start();
 
-        mockConsole.Verify(c => c.ReadInput(), Times.Exactly(2));
+        mockConsole.Verify(c => c.ReadInput(), Times.Once);
     }
 
     [Fact]

@@ -36,7 +36,8 @@ public partial class EnglishDictionary(int minWordLength, int maxWordLength)
 
             englishDictionary.Add(candidate);
 
-            if (candidate.Length == MaxWordLength)
+            // Words ending in a single S can't be entered, so they can't be the answer
+            if (candidate.Length == MaxWordLength && !(candidate.EndsWith('S') && !candidate.EndsWith("SS")))
             {
                 candidateWords.Add(new LongestWordCandidate { LongestWord = candidate, SortBy = Random.Shared.Next() });
             }
