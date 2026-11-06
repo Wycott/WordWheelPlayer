@@ -12,15 +12,15 @@ public partial class GameEngine
 
     private string keyLetter = string.Empty;
 
-    private string GameLetters { get; set; } = string.Empty;
+    private string OuterLetters { get; set; } = string.Empty;
+
+    private string WheelLetters => keyLetter + OuterLetters;
 
     private int Score { get; set; }
 
     private List<string> playableWords = [];
 
     private DateTime WhenStarted { get; } = DateTime.Now;
-
-    private List<string> lettersToUse = [];
 
     private IGameConsole ConsoleOperations
     {
@@ -73,7 +73,6 @@ public partial class GameEngine
             Score = wordsFoundSoFar.Sum(ScoreHelper.CalculateWordScore);
         }
 
-        lettersToUse = AvailableWords.GameLetters;
         DisplayInstructions();
         Init();
     }
@@ -159,7 +158,7 @@ public partial class GameEngine
                 break;
             case "M":
             case "MIX":
-                GameLetters = LetterHelper.ShuffleLetters(GameLetters);
+                OuterLetters = LetterHelper.ShuffleLetters(OuterLetters);
                 DisplayLetters();
                 break;
             case "PEEK": // Easter egg
@@ -174,8 +173,7 @@ public partial class GameEngine
 
     private void PlayWord(string word)
     {
-        var wheelLetters = GameLetters.Replace("*", "");
-        var problem = GuessValidator.FindProblem(word, wheelLetters, keyLetter, wordsFoundSoFar, AvailableWords);
+        var problem = GuessValidator.FindProblem(word, WheelLetters, keyLetter, wordsFoundSoFar, AvailableWords);
 
         if (problem != null)
         {
@@ -204,12 +202,11 @@ public partial class GameEngine
 
     private void Init()
     {
-        keyLetter = lettersToUse[0];
+        var letters = AvailableWords.GameLetters;
 
-        var markedLetters = $"{keyLetter}*{string.Concat(lettersToUse.Skip(1))}";
-
-        GameLetters = LetterHelper.ShuffleLetters(markedLetters);
-        playableWords = AvailableWords.GetPlayableWords(lettersToUse, keyLetter);
+        keyLetter = letters[0];
+        OuterLetters = LetterHelper.ShuffleLetters(string.Concat(letters.Skip(1)));
+        playableWords = AvailableWords.GetPlayableWords(letters, keyLetter);
 
         DisplayInitialLetters();
     }

@@ -22,21 +22,6 @@ public class LetterHelperTests
     }
 
     [Fact]
-    public void ShuffleLetters_ShouldHandleAsteriskCorrectly()
-    {
-        // Arrange
-        const string Input = "AB*C";
-
-        // Act
-        var result = LetterHelper.ShuffleLetters(Input);
-
-        // Assert
-        Assert.Equal(Input.Length, result.Length);
-        Assert.Contains("*", result);
-        Assert.True(result.Replace("*", "").All(c => Input.Contains(c)));
-    }
-
-    [Fact]
     public void ShuffleLetters_ShouldReturnEmptyStringForEmptyInput()
     {
         // Arrange

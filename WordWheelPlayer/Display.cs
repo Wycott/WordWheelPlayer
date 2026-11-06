@@ -127,8 +127,7 @@ public partial class GameEngine
 
     private void DisplayBestTotals(int score)
     {
-        var letters = GameLetters.Replace("*", "");
-        var bestGame = BestScoreHelper.UpdateBestScoreIfHigher(score, wordsFoundSoFar.Count, letters, keyLetter);
+        var bestGame = BestScoreHelper.UpdateBestScoreIfHigher(score, wordsFoundSoFar.Count, WheelLetters, keyLetter);
 
         ConsoleOperations.WriteOutput($"Best Score       : {bestGame.BestScore}");
         ConsoleOperations.WriteOutput($"Best Score Date  : {bestGame.WhenAchieved(WhenStarted)}");
@@ -145,7 +144,7 @@ public partial class GameEngine
     {
         ConsoleOperations.WriteEmptyLine();
 
-        var lettersLines = PrepareDisplayLetters(GameLetters);
+        var lettersLines = PrepareDisplayLetters(keyLetter, OuterLetters);
 
         foreach (var line in lettersLines)
         {
@@ -173,37 +172,16 @@ public partial class GameEngine
     }
 
     [AiGenerated("Only works for a specific number of game letters (9)")]
-    private static List<string> PrepareDisplayLetters(string gameLetters)
+    private static List<string> PrepareDisplayLetters(string centreLetter, string outerLetters)
     {
-        var frontLoadedLetterSet = FrontLoadCentreLetter(gameLetters);
-        var centerChar = frontLoadedLetterSet[0];
-        var surroundingChars = frontLoadedLetterSet.Substring(1, 8).ToCharArray();
-
         return
         [
-            $"        {surroundingChars[0]}",
-            $"      {surroundingChars[7]}   {surroundingChars[1]}",
-            $"    {surroundingChars[6]}   {centerChar}   {surroundingChars[2]}",
-            $"      {surroundingChars[5]}   {surroundingChars[3]}",
-            $"        {surroundingChars[4]}"
+            $"        {outerLetters[0]}",
+            $"      {outerLetters[7]}   {outerLetters[1]}",
+            $"    {outerLetters[6]}   {centreLetter}   {outerLetters[2]}",
+            $"      {outerLetters[5]}   {outerLetters[3]}",
+            $"        {outerLetters[4]}"
         ];
-    }
-
-    private static string FrontLoadCentreLetter(string gameLetters)
-    {
-        var asteriskIndex = gameLetters.IndexOf('*');
-
-        if (asteriskIndex < 1 || asteriskIndex > gameLetters.Length - 1)
-        {
-            // No asterisk found or at invalid position — return letters without marker
-            return gameLetters.Replace("*", "");
-        }
-
-        // The character before the asterisk is the centre letter
-        var centreLetter = gameLetters[asteriskIndex - 1];
-        var remaining = gameLetters[..(asteriskIndex - 1)] + gameLetters[(asteriskIndex + 1)..];
-
-        return centreLetter + remaining;
     }
 
     private void DisplayMessageLines(List<string> textLines)

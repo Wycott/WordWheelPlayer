@@ -194,6 +194,26 @@ public class GameEngineRegressionTests
     }
 
     [Fact]
+    public void Start_MixCommand_KeepsKeyLetterCentralAndAllLettersOnTheWheel()
+    {
+        var console = new RecordingConsole();
+        var engine = new GameEngine(console);
+        var answer = GetAnswer(console, engine);
+        var key = GetKeyLetter(engine)[0];
+
+        console.Enqueue(":M");
+        console.Enqueue(":QUIT");
+        engine.Start();
+
+        var lastRead = console.Log.LastIndexOf("READ");
+        var wheelRows = console.Log[(lastRead - 5)..lastRead].Select(row => row[4..]).ToList();
+        var wheelLetters = string.Concat(wheelRows).Replace(" ", "");
+
+        Assert.Equal(key, wheelRows[2][8]);
+        Assert.Equal(answer.Order(), wheelLetters.Order());
+    }
+
+    [Fact]
     public void Start_EndOfInput_EndsGame()
     {
         var console = new RecordingConsole();

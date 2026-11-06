@@ -58,7 +58,7 @@ Letters are arranged in a diamond pattern across 5 lines:
         I
 ```
 
-The centre position (E in the example) is the key letter. The key letter is marked internally with a `*` suffix in the letter string.
+The centre position (E in the example) is the key letter.
 
 ## Commands
 

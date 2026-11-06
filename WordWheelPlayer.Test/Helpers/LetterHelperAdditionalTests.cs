@@ -7,24 +7,6 @@ namespace WordWheelPlayer.Test.Helpers;
 public class LetterHelperAdditionalTests
 {
     [Fact]
-    public void TryShuffleLetters_WithAsterisk_PreservesAsterisk()
-    {
-        var result = LetterHelper.ShuffleLetters("A*BC");
-
-        Assert.Contains("*", result);
-        Assert.Equal(4, result.Length);
-    }
-
-    [Fact]
-    public void TryShuffleLetters_WithoutAsterisk_ShufflesLetters()
-    {
-        var result = LetterHelper.ShuffleLetters("ABC");
-
-        Assert.Equal(3, result.Length);
-        Assert.DoesNotContain("*", result);
-    }
-
-    [Fact]
     public void TryShuffleLetters_MultipleLetters_ContainsAllLetters()
     {
         const string Input = "ABCDEFGHI";
