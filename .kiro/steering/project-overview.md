@@ -39,6 +39,7 @@ WordWheelPlayer is a .NET 10 console application that simulates the word wheel p
 | `BestScoreHelper` | Loads/saves best score from `BestGame.json` |
 | `DisplayHelper` | Centers text within a 64-character width |
 | `LetterHelper` | Shuffles letters while preserving the key letter marker (`*`) |
+| `GuessValidator` | Applies the word rules to a guess and returns any problem message |
 | `ScoreHelper` | Fibonacci-based scoring: word length 3→1pt, 4→2pt, 5→3pt, 6→5pt, 7→8pt, 8→13pt, 9→21pt |
 
 ## Game Rules
