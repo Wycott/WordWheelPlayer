@@ -2,7 +2,7 @@
 
 ## Summary
 
-WordWheelPlayer is a .NET 10 console application that simulates the word wheel puzzle found in newspapers. The player is given 9 letters arranged in a wheel pattern with a central key letter and must find as many valid English words as possible (3–9 letters) that include the key letter. Points are awarded using a Fibonacci-based scoring system.
+WordWheelPlayer is a .NET 10 console application that simulates the newspaper word wheel puzzle. Players are given nine letters with a central key letter and must find as many valid English words (3–9 letters) as possible, each containing the key letter. The solution includes a comprehensive xUnit v3 test suite covering the game engine, dictionary, and helper logic.
 
 ## Languages
 
@@ -10,35 +10,31 @@ WordWheelPlayer is a .NET 10 console application that simulates the word wheel p
 |----------|-------------|
 | C# | .cs |
 | JSON | .json |
-| XML | .csproj, .sln |
-| YAML | .yml |
 
 ## Modules
 
 | Language | Count |
 |----------|-------|
-| C# (source) | 14 |
-| C# (test) | 17 |
+| C# | 36 |
 | JSON | 2 |
-| YAML | 1 |
 
 ## Unit Tests
 
 | Metric | Value |
 |--------|-------|
-| Total tests | 73 |
-| Framework | xUnit |
+| Total tests | 106 |
+| Framework | xUnit v3 |
 
 ## Development History
 
 | Metric | Value |
 |--------|-------|
-| Total commits | 168 |
-| First commit | Thursday, 02 February 2023 |
-| Last commit | Friday, 10 July 2026 |
-| Days | 1254 |
-| Weeks | 179 |
-| Months | 41 |
+| Total commits | 188 |
+| First commit | Thursday, 2 February 2023 |
+| Last commit | Friday, 6 November 2026 |
+| Days | 1373 |
+| Weeks | 196 |
+| Months | 45 |
 | Years | 3 |
 
 ## Commits by Year
@@ -48,5 +44,5 @@ pie title Commits by Year
     "2023" : 32
     "2024" : 8
     "2025" : 85
-    "2026" : 43
+    "2026" : 63
 ```
