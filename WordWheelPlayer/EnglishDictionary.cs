@@ -53,6 +53,12 @@ public partial class EnglishDictionary(int minWordLength, int maxWordLength)
         }
     }
 
+    public void RestoreAnswer(string answer)
+    {
+        LongestWord = answer;
+        GameLetters = ArrangeLettersForGame(answer);
+    }
+
     public bool WordIsInDictionary(string wordToCheck)
     {
         return englishDictionary.Contains(wordToCheck);

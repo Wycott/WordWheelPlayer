@@ -71,6 +71,7 @@ The centre position (E in the example) is the key letter. The key letter is mark
 | :MIX | :M | Shuffle the surrounding letters (key stays central) |
 | :SCORE | :S | Show current score and best score |
 | :RESTART | :R | Start a new game with fresh letters |
+| :SAVE | | Save the game (replacing any earlier save) and show the code needed to carry it on |
 | :VERSION | :V | Show build/version info |
 | :HELP | :H | Show instructions |
 | :EXIT | :X | Quit the game |

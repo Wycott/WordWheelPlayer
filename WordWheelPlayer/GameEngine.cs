@@ -39,20 +39,43 @@ public partial class GameEngine
         get;
     }
 
-    public GameEngine(IGameConsole consoleOperations)
+    private SavedGameStore SavedGames
     {
-        ConsoleOperations = consoleOperations;
-        Config = GameConfig.Load();
-        AvailableWords = new EnglishDictionary(MinLength, MaxLength);
-        RunPreGame();
+        get;
     }
 
-    private void RunPreGame()
+    public GameEngine(IGameConsole consoleOperations, SavedGameStore? savedGames = null)
+    {
+        ConsoleOperations = consoleOperations;
+        SavedGames = savedGames ?? new SavedGameStore();
+        Config = GameConfig.Load();
+        AvailableWords = new EnglishDictionary(MinLength, MaxLength);
+
+        var savedGame = ChooseSavedGame();
+
+        RunPreGame(savedGame);
+
+        if (savedGame != null)
+        {
+            DisplayWordsFound();
+            DisplayBestAndCurrentScore(wordsFoundSoFar.Count, Score);
+        }
+    }
+
+    private void RunPreGame(SavedGame? savedGame = null)
     {
         gameLetters.Clear();
         Score = 0;
         wordsFoundSoFar.Clear();
         AvailableWords.InitDictionary();
+
+        if (savedGame != null)
+        {
+            AvailableWords.RestoreAnswer(savedGame.Answer);
+            wordsFoundSoFar.AddRange(savedGame.WordsFound);
+            Score = wordsFoundSoFar.Sum(ScoreHelper.CalculateWordScore);
+        }
+
         lettersToUse = AvailableWords.GameLetters;
         DisplayInstructions();
         Init();
@@ -109,6 +132,9 @@ public partial class GameEngine
                     case "T":
                     case "TOTALS":
                         DisplayTotalsBreakdown();
+                        continue;
+                    case "SAVE":
+                        SaveGame();
                         continue;
                     case "C":
                     case "COUNTS":

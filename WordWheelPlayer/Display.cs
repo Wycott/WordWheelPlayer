@@ -251,6 +251,7 @@ public partial class GameEngine
             "\t:MIX     - mix up the letters",
             "\t:SCORE   - show the current (and best) score",
             "\t:RESTART - restart the game with new letters",
+            "\t:SAVE    - save the game and get a code to carry it on later",
             "\t:VERSION - show version information",
             "\t:HELP    - display this text",
             "",
