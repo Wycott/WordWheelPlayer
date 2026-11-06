@@ -194,6 +194,29 @@ public class GameEngineRegressionTests
     }
 
     [Fact]
+    public void Start_CountsCommand_ShowsFoundAndTotalForEachLength()
+    {
+        var console = new RecordingConsole();
+        var engine = new GameEngine(console);
+        var answer = GetAnswer(console, engine);
+        var key = GetKeyLetter(engine);
+
+        var dictionary = new EnglishDictionary(3, 9);
+        dictionary.InitDictionary();
+
+        var words = dictionary.GetPlayableWords(answer.Select(c => c.ToString()), key);
+        var nineLetterTotal = words.Count(w => w.Length == 9);
+
+        console.Enqueue(answer);
+        console.Enqueue(":C");
+        console.Enqueue(":QUIT");
+        engine.Start();
+
+        Assert.Contains($"OUT:9 letters :   1 of {nineLetterTotal,3}", console.Log);
+        Assert.Equal(3, console.Log.Count(entry => entry == "READ"));
+    }
+
+    [Fact]
     public void Start_EndOfInput_EndsGame()
     {
         var console = new RecordingConsole();

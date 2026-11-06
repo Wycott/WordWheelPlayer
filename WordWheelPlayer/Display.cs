@@ -84,6 +84,24 @@ public partial class GameEngine
         ConsoleOperations.WriteEmptyLine();
     }
 
+    private void DisplayCountsByLength()
+    {
+        var lengthGroups = playableWords
+            .GroupBy(w => w.Length)
+            .OrderBy(g => g.Key);
+
+        ConsoleOperations.WriteEmptyLine();
+
+        foreach (var group in lengthGroups)
+        {
+            var found = wordsFoundSoFar.Count(w => w.Length == group.Key);
+
+            ConsoleOperations.WriteOutput($"{group.Key} letters : {found,3} of {group.Count(),3}");
+        }
+
+        ConsoleOperations.WriteEmptyLine();
+    }
+
     private void DisplayBestAndCurrentScore(int wordCount, int score)
     {
         DisplayTotals(wordCount, score);
@@ -93,7 +111,7 @@ public partial class GameEngine
     private void DisplayTotals(int wordCount, int score)
     {
         ConsoleOperations.WriteEmptyLine();
-        ConsoleOperations.WriteOutput($"Found            : {wordCount} of {PlayableWordCount}");
+        ConsoleOperations.WriteOutput($"Found            : {wordCount} of {playableWords.Count}");
         ConsoleOperations.WriteOutput($"Score            : {score}");
         ConsoleOperations.WriteEmptyLine();
     }
@@ -220,6 +238,7 @@ public partial class GameEngine
             "\t:LETTERS - to display the letters",
             "\t:WORDS   - to display the words found so far",
             "\t:TOTALS  - show words grouped by length with score breakdown",
+            "\t:COUNTS  - show how many words of each length have been found",
             "\t:MIX     - mix up the letters",
             "\t:SCORE   - show the current (and best) score",
             "\t:RESTART - restart the game with new letters",

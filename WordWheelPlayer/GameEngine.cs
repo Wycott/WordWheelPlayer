@@ -18,7 +18,7 @@ public partial class GameEngine
 
     private int Score { get; set; }
 
-    private int PlayableWordCount { get; set; }
+    private List<string> playableWords = [];
 
     private DateTime WhenStarted { get; } = DateTime.Now;
 
@@ -109,6 +109,10 @@ public partial class GameEngine
                     case "T":
                     case "TOTALS":
                         DisplayTotalsBreakdown();
+                        continue;
+                    case "C":
+                    case "COUNTS":
+                        DisplayCountsByLength();
                         continue;
                     case "V":
                     case "VERSION":
@@ -267,7 +271,7 @@ public partial class GameEngine
         }
 
         GameLetters = LetterHelper.ShuffleLetters(sb.ToString());
-        PlayableWordCount = AvailableWords.GetPlayableWords(lettersToUse, keyLetter).Count;
+        playableWords = AvailableWords.GetPlayableWords(lettersToUse, keyLetter);
 
         DisplayInitialLetters();
     }

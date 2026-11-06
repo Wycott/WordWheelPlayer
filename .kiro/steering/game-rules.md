@@ -67,6 +67,7 @@ The centre position (E in the example) is the key letter. The key letter is mark
 | :LETTERS | :L | Redisplay the letter wheel |
 | :WORDS | :W | List all words found so far |
 | :TOTALS | :T | Show words grouped by length with score breakdown |
+| :COUNTS | :C | Show words found and available for each length |
 | :MIX | :M | Shuffle the surrounding letters (key stays central) |
 | :SCORE | :S | Show current score and best score |
 | :RESTART | :R | Start a new game with fresh letters |
