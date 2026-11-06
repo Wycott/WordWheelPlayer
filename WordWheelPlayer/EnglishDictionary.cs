@@ -2,13 +2,13 @@ using System.Text.RegularExpressions;
 
 namespace WordWheelPlayer;
 
-public partial class EnglishDictionary(int minWordLength, int maxWordLength)
+public partial class EnglishDictionary(int minWordLength, int maxWordLength, string wordsFilePath = "words.txt")
 {
     public string? LongestWord { get; set; }
     public List<string> GameLetters { get; set; } = [];
 
-    private readonly List<string> englishDictionary = [];
-    private readonly List<LongestWordCandidate> candidateWords = [];
+    private readonly HashSet<string> englishDictionary = [];
+    private readonly List<string> candidateWords = [];
 
     public int MinWordLength { get; } = minWordLength;
     public int MaxWordLength { get; } = maxWordLength;
@@ -18,10 +18,20 @@ public partial class EnglishDictionary(int minWordLength, int maxWordLength)
 
     public void InitDictionary()
     {
-        englishDictionary.Clear();
-        candidateWords.Clear();
+        if (englishDictionary.Count == 0)
+        {
+            LoadWords();
+        }
 
-        using var sr = new StreamReader("words.txt");
+        if (candidateWords.Count > 0)
+        {
+            RestoreAnswer(candidateWords[Random.Shared.Next(candidateWords.Count)]);
+        }
+    }
+
+    private void LoadWords()
+    {
+        using var sr = new StreamReader(wordsFilePath);
 
         while (sr.ReadLine() is { } line)
         {
@@ -29,27 +39,17 @@ public partial class EnglishDictionary(int minWordLength, int maxWordLength)
 
             if (candidate.Length > MaxWordLength ||
                 candidate.Length < MinWordLength ||
-                !AlphaOnly().IsMatch(candidate))
+                !AlphaOnly().IsMatch(candidate) ||
+                !englishDictionary.Add(candidate))
             {
                 continue;
             }
 
-            englishDictionary.Add(candidate);
-
             // Words ending in a single S can't be entered, so they can't be the answer
             if (candidate.Length == MaxWordLength && !EndsInSingleS(candidate))
             {
-                candidateWords.Add(new LongestWordCandidate { LongestWord = candidate, SortBy = Random.Shared.Next() });
+                candidateWords.Add(candidate);
             }
-        }
-
-        var firstCandidateWord = candidateWords.MinBy(x => x.SortBy);
-
-        LongestWord = firstCandidateWord?.LongestWord;
-
-        if (LongestWord != null)
-        {
-            GameLetters = ArrangeLettersForGame(LongestWord);
         }
     }
 
@@ -75,7 +75,6 @@ public partial class EnglishDictionary(int minWordLength, int maxWordLength)
 
         return englishDictionary
             .Where(word => word.Contains(keyLetter) && !EndsInSingleS(word) && CanBeMadeFrom(word, availableLetters))
-            .Distinct()
             .ToList();
     }
 

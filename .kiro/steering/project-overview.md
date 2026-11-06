@@ -29,7 +29,6 @@ WordWheelPlayer is a .NET 10 console application that simulates the word wheel p
 | Class | Purpose |
 |-------|---------|
 | `GameLetter` | Tracks a letter, whether it's been used this turn, and whether it's the key letter |
-| `LongestWordCandidate` | Holds a 9-letter word candidate with a random sort key for selection |
 | `BestGame` | Persisted best score and date achieved |
 
 ### Helpers (`Helpers/`)

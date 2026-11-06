@@ -38,7 +38,6 @@ WordWheelPlayer/
 ├── GameConsole.cs              # Console I/O implementation
 ├── IGameConsole.cs             # Console abstraction interface
 ├── GameLetter.cs               # Letter model
-├── LongestWordCandidate.cs     # Word candidate model
 ├── BestScore.cs                # Best score model
 ├── Helpers/
 │   ├── BestScoreHelper.cs      # Score persistence
