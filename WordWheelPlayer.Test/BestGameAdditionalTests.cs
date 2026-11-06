@@ -1,10 +1,30 @@
 using AiAnnotations;
+using WordWheelPlayer.Helpers;
 
 namespace WordWheelPlayer.Test;
 
 [AiGenerated]
 public class BestGameAdditionalTests
 {
+    [Theory]
+    [InlineData("")]
+    [InlineData("not json")]
+    public void LoadGame_DamagedFile_StartsFromNoBestScore(string fileContents)
+    {
+        const string FilePath = "BestGame.json";
+
+        File.WriteAllText(FilePath, fileContents);
+
+        try
+        {
+            Assert.Equal(0, BestScoreHelper.LoadGame().BestScore);
+        }
+        finally
+        {
+            File.Delete(FilePath);
+        }
+    }
+
     [Fact]
     public void BestGame_DefaultValues_AreSetCorrectly()
     {

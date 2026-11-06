@@ -44,11 +44,18 @@ public static class BestScoreHelper
             return defaultGame;
         }
 
-        var json = File.ReadAllText(FilePath);
+        try
+        {
+            var json = File.ReadAllText(FilePath);
+            var retVal = JsonSerializer.Deserialize<BestGame>(json);
 
-        var retVal = JsonSerializer.Deserialize<BestGame>(json) ?? default(BestGame);
-
-        return retVal ?? new BestGame { BestScore = 0, BestDate = DateTime.Now };
+            return retVal ?? new BestGame { BestScore = 0, BestDate = DateTime.Now };
+        }
+        catch (JsonException)
+        {
+            // An empty or damaged file shouldn't stop the game, so start again from no best score
+            return new BestGame { BestScore = 0, BestDate = DateTime.Now };
+        }
     }
 
     public static void SaveGame(BestGame game)
