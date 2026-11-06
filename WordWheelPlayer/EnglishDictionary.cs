@@ -37,7 +37,7 @@ public partial class EnglishDictionary(int minWordLength, int maxWordLength)
             englishDictionary.Add(candidate);
 
             // Words ending in a single S can't be entered, so they can't be the answer
-            if (candidate.Length == MaxWordLength && !(candidate.EndsWith('S') && !candidate.EndsWith("SS")))
+            if (candidate.Length == MaxWordLength && !EndsInSingleS(candidate))
             {
                 candidateWords.Add(new LongestWordCandidate { LongestWord = candidate, SortBy = Random.Shared.Next() });
             }
@@ -56,6 +56,28 @@ public partial class EnglishDictionary(int minWordLength, int maxWordLength)
     public bool WordIsInDictionary(string wordToCheck)
     {
         return englishDictionary.Contains(wordToCheck);
+    }
+
+    public static bool EndsInSingleS(string word)
+    {
+        return word.EndsWith('S') && !word.EndsWith("SS");
+    }
+
+    public List<string> GetPlayableWords(IEnumerable<string> letters, string keyLetter)
+    {
+        var availableLetters = string.Concat(letters);
+
+        return englishDictionary
+            .Where(word => word.Contains(keyLetter) && !EndsInSingleS(word) && CanBeMadeFrom(word, availableLetters))
+            .Distinct()
+            .ToList();
+    }
+
+    private static bool CanBeMadeFrom(string word, string availableLetters)
+    {
+        var remainingLetters = availableLetters.ToList();
+
+        return word.All(remainingLetters.Remove);
     }
 
     private static List<string> ArrangeLettersForGame(string word)

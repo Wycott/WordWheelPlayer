@@ -18,6 +18,8 @@ public partial class GameEngine
 
     private int Score { get; set; }
 
+    private int PlayableWordCount { get; set; }
+
     private DateTime WhenStarted { get; } = DateTime.Now;
 
     private List<string> lettersToUse = [];
@@ -133,7 +135,7 @@ public partial class GameEngine
                 continue;
             }
 
-            if (word.EndsWith('S') && !word.EndsWith("SS"))
+            if (EnglishDictionary.EndsInSingleS(word))
             {
                 DisplayMessage("Words may not end in S (-SS is allowed)");
                 continue;
@@ -265,6 +267,7 @@ public partial class GameEngine
         }
 
         GameLetters = LetterHelper.ShuffleLetters(sb.ToString());
+        PlayableWordCount = AvailableWords.GetPlayableWords(lettersToUse, keyLetter).Count;
 
         DisplayInitialLetters();
     }

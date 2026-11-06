@@ -93,7 +93,7 @@ public partial class GameEngine
     private void DisplayTotals(int wordCount, int score)
     {
         ConsoleOperations.WriteEmptyLine();
-        ConsoleOperations.WriteOutput($"Words Found      : {wordCount}");
+        ConsoleOperations.WriteOutput($"Found            : {wordCount} of {PlayableWordCount}");
         ConsoleOperations.WriteOutput($"Score            : {score}");
         ConsoleOperations.WriteEmptyLine();
     }

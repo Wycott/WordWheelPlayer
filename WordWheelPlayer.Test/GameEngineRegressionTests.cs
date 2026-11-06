@@ -155,6 +155,45 @@ public class GameEngineRegressionTests
     }
 
     [Fact]
+    public void GetPlayableWords_AppliesTheGameRules()
+    {
+        var dictionary = new EnglishDictionary(3, 9);
+        dictionary.InitDictionary();
+
+        var words = dictionary.GetPlayableWords(["G", "L", "A", "S", "S"], "A");
+
+        Assert.Contains("GLASS", words);
+        Assert.Contains("LASS", words);
+        Assert.DoesNotContain("GALS", words);
+        Assert.DoesNotContain("LOSS", words);
+        Assert.Equal(words.Count, words.Distinct().Count());
+    }
+
+    [Fact]
+    public void Start_FindingEveryPlayableWord_ShowsAllFound()
+    {
+        var console = new RecordingConsole();
+        var engine = new GameEngine(console);
+        var answer = GetAnswer(console, engine);
+        var key = GetKeyLetter(engine);
+
+        var dictionary = new EnglishDictionary(3, 9);
+        dictionary.InitDictionary();
+
+        var words = dictionary.GetPlayableWords(answer.Select(c => c.ToString()), key);
+
+        foreach (var word in words)
+        {
+            console.Enqueue(word);
+        }
+
+        console.Enqueue(":QUIT");
+        engine.Start();
+
+        Assert.Contains($"OUT:Found            : {words.Count} of {words.Count}", console.Log);
+    }
+
+    [Fact]
     public void Start_EndOfInput_EndsGame()
     {
         var console = new RecordingConsole();
