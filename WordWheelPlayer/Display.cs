@@ -96,10 +96,19 @@ public partial class GameEngine
         {
             var found = wordsFoundSoFar.Count(w => w.Length == group.Key);
 
-            ConsoleOperations.WriteOutput($"{group.Key} letters : {found,3} of {group.Count(),3}");
+            var total = group.Count();
+
+            ConsoleOperations.WriteOutput($"{group.Key} letters : {found,3} of {total,3}  {FormatPercentage(found, total),6}");
         }
 
         ConsoleOperations.WriteEmptyLine();
+    }
+
+    private static string FormatPercentage(int found, int total)
+    {
+        var percentage = total == 0 ? 0 : 100.0 * found / total;
+
+        return $"{percentage:F1}%";
     }
 
     private void DisplayBestAndCurrentScore(int wordCount, int score)
@@ -111,7 +120,7 @@ public partial class GameEngine
     private void DisplayTotals(int wordCount, int score)
     {
         ConsoleOperations.WriteEmptyLine();
-        ConsoleOperations.WriteOutput($"Found            : {wordCount} of {playableWords.Count}");
+        ConsoleOperations.WriteOutput($"Found            : {wordCount} of {playableWords.Count} ({FormatPercentage(wordCount, playableWords.Count)})");
         ConsoleOperations.WriteOutput($"Score            : {score}");
         ConsoleOperations.WriteEmptyLine();
     }

@@ -190,7 +190,7 @@ public class GameEngineRegressionTests
         console.Enqueue(":QUIT");
         engine.Start();
 
-        Assert.Contains($"OUT:Found            : {words.Count} of {words.Count}", console.Log);
+        Assert.Contains($"OUT:Found            : {words.Count} of {words.Count} (100.0%)", console.Log);
     }
 
     [Fact]
@@ -212,7 +212,9 @@ public class GameEngineRegressionTests
         console.Enqueue(":QUIT");
         engine.Start();
 
-        Assert.Contains($"OUT:9 letters :   1 of {nineLetterTotal,3}", console.Log);
+        var expectedPercentage = $"{100.0 / nineLetterTotal:F1}%";
+
+        Assert.Contains($"OUT:9 letters :   1 of {nineLetterTotal,3}  {expectedPercentage,6}", console.Log);
         Assert.Equal(3, console.Log.Count(entry => entry == "READ"));
     }
 
