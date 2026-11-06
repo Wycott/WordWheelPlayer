@@ -151,7 +151,7 @@ public partial class GameEngine
                 continue;
             }
 
-            if (InvalidLetterFound(word, GameLetters, out var badGuy))
+            if (InvalidLetterFound(word, GameLetters.Replace("*", ""), out var badGuy))
             {
                 DisplayMessage($"{badGuy} is not a valid letter");
                 continue;
@@ -163,7 +163,7 @@ public partial class GameEngine
                 continue;
             }
 
-            var letterCount = 0;
+            char? overusedLetter = null;
 
             foreach (var guessLetter in word)
             {
@@ -171,33 +171,36 @@ public partial class GameEngine
 
                 if (gl == null)
                 {
-                    continue;
+                    overusedLetter = guessLetter;
+                    break;
                 }
 
                 gl.Used = true;
-                letterCount++;
             }
 
             // Reset before any early exit so a rejected guess can't leave letters marked as used
             ResetLetters();
 
-            if (letterCount == word.Length)
+            if (overusedLetter != null)
             {
-                if (word.Length < MinLength)
-                {
-                    DisplayMessage($"Words must be at least {MinLength} letters long!");
-                    continue;
-                }
-
-                if (!AvailableWords.WordIsInDictionary(word))
-                {
-                    DisplayMessage("Word not found in dictionary");
-                    continue;
-                }
-
-                Score += ScoreHelper.CalculateWordScore(word);
-                wordsFoundSoFar.Add(word);
+                DisplayMessage($"{overusedLetter} has been used too many times");
+                continue;
             }
+
+            if (word.Length < MinLength)
+            {
+                DisplayMessage($"Words must be at least {MinLength} letters long!");
+                continue;
+            }
+
+            if (!AvailableWords.WordIsInDictionary(word))
+            {
+                DisplayMessage("Word not found in dictionary");
+                continue;
+            }
+
+            Score += ScoreHelper.CalculateWordScore(word);
+            wordsFoundSoFar.Add(word);
 
             wordsFoundSoFar.Sort();
 

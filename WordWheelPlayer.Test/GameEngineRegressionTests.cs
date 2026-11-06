@@ -122,6 +122,39 @@ public class GameEngineRegressionTests
     }
 
     [Fact]
+    public void Start_LetterUsedTooManyTimes_ShowsMessageAndDoesNotLeaveLettersUsed()
+    {
+        var console = new RecordingConsole();
+        var engine = new GameEngine(console);
+        var answer = GetAnswer(console, engine);
+        var key = GetKeyLetter(engine)[0];
+
+        var overusedWord = new string(key, answer.Count(c => c == key) + 1);
+
+        console.Enqueue(overusedWord);
+        console.Enqueue(answer);
+        console.Enqueue(":QUIT");
+        engine.Start();
+
+        Assert.Contains($"OUT:{key} has been used too many times", console.Log);
+        Assert.Contains("OUT:Score            : 21", console.Log);
+    }
+
+    [Fact]
+    public void Start_KeyLetterMarker_IsNotAValidLetter()
+    {
+        var console = new RecordingConsole();
+        var engine = new GameEngine(console);
+        var key = GetKeyLetter(engine);
+
+        console.Enqueue($"{key}*");
+        console.Enqueue(":QUIT");
+        engine.Start();
+
+        Assert.Contains("OUT:* is not a valid letter", console.Log);
+    }
+
+    [Fact]
     public void Start_EndOfInput_EndsGame()
     {
         var console = new RecordingConsole();
